@@ -172,7 +172,9 @@ end
 start.t_aiRampData.teamcoop = start.t_aiRampData.arcade
 start.t_aiRampData.netplayteamcoop = start.t_aiRampData.arcade
 start.t_aiRampData.timeattack = start.t_aiRampData.arcade
-start.t_aiRampData.survival = function() return gameOption("Arcade.survival.AIramp.start")[1], gameOption("Arcade.survival.AIramp.start")[2], gameOption("Arcade.survival.AIramp.end")[1], gameOption("Arcade.survival.AIramp.end")[2] end
+start.t_aiRampData.survival = function()
+	return gameOption("Arcade.survival.AIramp.start")[1], gameOption("Arcade.survival.AIramp.start")[2], gameOption("Arcade.survival.AIramp.end")[1], gameOption("Arcade.survival.AIramp.end")[2]
+end
 start.t_aiRampData.survivalcoop = start.t_aiRampData.survival
 start.t_aiRampData.netplaysurvivalcoop = start.t_aiRampData.survival
 
@@ -420,23 +422,43 @@ end
 -- used by start.f_storeStats function, depending on game mode. Can be appended
 -- via external module, without conflicting with default scripts.
 start.t_sortRanking = {}
-start.t_sortRanking.arcade = function(t, a, b) return t[b].score < t[a].score end
+start.t_sortRanking.arcade = function(t, a, b)
+	return t[b].score < t[a].score
+end
 start.t_sortRanking.teamcoop = start.t_sortRanking.arcade
 start.t_sortRanking.netplayteamcoop = start.t_sortRanking.arcade
-start.t_sortRanking.timeattack = function(t, a, b) return t[b].time > t[a].time end
-start.t_sortRanking.survival = function(t, a, b) return t[b].win < t[a].win or (t[b].win == t[a].win and t[b].score < t[a].score) end
+start.t_sortRanking.timeattack = function(t, a, b)
+	return t[b].time > t[a].time
+end
+start.t_sortRanking.survival = function(t, a, b)
+	return t[b].win < t[a].win or (t[b].win == t[a].win and t[b].score < t[a].score)
+end
 start.t_sortRanking.survivalcoop = start.t_sortRanking.survival
 start.t_sortRanking.netplaysurvivalcoop = start.t_sortRanking.survival
 
 -- as above but the functions return if game mode should be considered "cleared"
 start.t_clearCondition = {
-	arcade = function() return winnerteam() == 1 end,
-	netplaysurvivalcoop = function() return winnerteam() == 1 or start.winCnt >= main.resultsTable.roundstowin end,
-	netplayteamcoop = function() return winnerteam() == 1 end,
-	survival = function() return winnerteam() == 1 or start.winCnt >= main.resultsTable.roundstowin end,
-	survivalcoop = function() return winnerteam() == 1 or start.winCnt >= main.resultsTable.roundstowin end,
-	timeattack = function() return winnerteam() == 1 end,
-	teamcoop = function() return winnerteam() == 1 end,
+	arcade = function()
+		return winnerteam() == 1
+	end,
+	netplaysurvivalcoop = function()
+		return winnerteam() == 1 or start.winCnt >= main.resultsTable.roundstowin
+	end,
+	netplayteamcoop = function()
+		return winnerteam() == 1
+	end,
+	survival = function()
+		return winnerteam() == 1 or start.winCnt >= main.resultsTable.roundstowin
+	end,
+	survivalcoop = function()
+		return winnerteam() == 1 or start.winCnt >= main.resultsTable.roundstowin
+	end,
+	timeattack = function()
+		return winnerteam() == 1
+	end,
+	teamcoop = function()
+		return winnerteam() == 1
+	end,
 }
 
 --data saving to stats.json
@@ -675,7 +697,9 @@ function start.f_setAssignedPal(ref, t_assignedPals)
 end
 
 --remaps palette based on button press and character's keymap settings
-function start.f_keyPalMap(ref, num) return start.f_getCharData(ref).pal_keymap[num] or num end
+function start.f_keyPalMap(ref, num)
+	return start.f_getCharData(ref).pal_keymap[num] or num
+end
 
 -- returns palette number
 function start.f_selectPal(ref, palno)
@@ -1261,7 +1285,9 @@ function start.f_selGrid(cell, slot)
 end
 
 --returns t_selChars table out of char ref
-function start.f_getCharData(ref) return main.t_selChars[ref + 1] end
+function start.f_getCharData(ref)
+	return main.t_selChars[ref + 1]
+end
 
 --returns stage ref out of def filename
 function start.f_getStageRef(def)
@@ -2872,7 +2898,9 @@ end
 
 function start.f_palMenuDraw(side, member, curIdx, validIdx, maxIdx)
 	-- helper to get infos
-	local function getInfo(key) return motif.select_info["p" .. side .. "_member" .. member .. "_" .. key] or motif.select_info["p" .. side .. "_" .. key] end
+	local function getInfo(key)
+		return motif.select_info["p" .. side .. "_member" .. member .. "_" .. key] or motif.select_info["p" .. side .. "_" .. key]
+	end
 	local displayText = (curIdx == maxIdx) and getInfo("palmenu_random_text") or tostring(validIdx)
 	-- bg
 	main.f_animPosDraw(motif.select_info["p" .. side .. "_palmenu_bg_data"])
@@ -4195,7 +4223,11 @@ function start.f_continue()
 					end
 				--counter anim time skip on button press
 				elseif main.f_input({ 1 }, { "pal" }) and start.t_continue.counter >= motif.continue_screen.counter_starttime + motif.continue_screen.counter_skipstart then
-					for _, v in main.f_sortKeys(start.t_continueCounts, function(t, a, b) return a > b end) do --iterate over the table in descending order
+					for _, v in
+						main.f_sortKeys(start.t_continueCounts, function(t, a, b)
+							return a > b
+						end)
+					do --iterate over the table in descending order
 						if start.t_continue.counter < v.skiptime then
 							while start.t_continue.counter < v.skiptime do
 								start.t_continue.counter = start.t_continue.counter + 1
@@ -4206,7 +4238,11 @@ function start.f_continue()
 					end
 				end
 				--counter anim snd play
-				for _, v in main.f_sortKeys(start.t_continueCounts, function(t, a, b) return a > b end) do --iterate over the table in descending order
+				for _, v in
+					main.f_sortKeys(start.t_continueCounts, function(t, a, b)
+						return a > b
+					end)
+				do --iterate over the table in descending order
 					if start.t_continue.counter == v.skiptime then
 						sndPlay(motif.files.snd_data, v.snd[1], v.snd[2])
 						break

@@ -22,7 +22,9 @@ function options.f_definedDisplay(key, t, default, ret)
 end
 
 --return correct precision
-function options.f_precision(v, decimal) return tonumber(string.format(decimal, v)) end
+function options.f_precision(v, decimal)
+	return tonumber(string.format(decimal, v))
+end
 
 --- Save the current configuration to the config file and handle common file modifications
 local t_commonFilesOriginal = gameOption("Common")
@@ -1461,10 +1463,18 @@ options.t_vardisplayPointers = {}
 -- Associative elements table storing functions returning current setting values
 -- rendered alongside menu item name. Can be appended via external module.
 options.t_vardisplay = {
-	["afterimagemax"] = function() return gameOption("Config.AfterImageMax") end,
-	["aipalette"] = function() return options.f_boolDisplay(gameOption("Arcade.AI.RandomColor"), motif.option_info.menu_valuename_random, motif.option_info.menu_valuename_default) end,
-	["aisurvivalpalette"] = function() return options.f_boolDisplay(gameOption("Arcade.AI.SurvivalColor"), motif.option_info.menu_valuename_random, motif.option_info.menu_valuename_default) end,
-	["airamping"] = function() return options.f_boolDisplay(gameOption("Arcade.AI.Ramping")) end,
+	["afterimagemax"] = function()
+		return gameOption("Config.AfterImageMax")
+	end,
+	["aipalette"] = function()
+		return options.f_boolDisplay(gameOption("Arcade.AI.RandomColor"), motif.option_info.menu_valuename_random, motif.option_info.menu_valuename_default)
+	end,
+	["aisurvivalpalette"] = function()
+		return options.f_boolDisplay(gameOption("Arcade.AI.SurvivalColor"), motif.option_info.menu_valuename_random, motif.option_info.menu_valuename_default)
+	end,
+	["airamping"] = function()
+		return options.f_boolDisplay(gameOption("Arcade.AI.Ramping"))
+	end,
 	["aspectratio"] = function()
 		local width = gameOption("Video.FightAspectWidth")
 		local height = gameOption("Video.FightAspectHeight")
@@ -1476,81 +1486,207 @@ options.t_vardisplay = {
 			return "Default"
 		end
 	end,
-	["audioducking"] = function() return options.f_boolDisplay(gameOption("Sound.AudioDucking"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled) end,
-	["autoguard"] = function() return options.f_boolDisplay(gameOption("Options.AutoGuard")) end,
+	["audioducking"] = function()
+		return options.f_boolDisplay(gameOption("Sound.AudioDucking"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled)
+	end,
+	["autoguard"] = function()
+		return options.f_boolDisplay(gameOption("Options.AutoGuard"))
+	end,
 	--['backgroundloading'] = function()
 	--	return options.f_boolDisplay(gameOption('Config.BackgroundLoading'), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled)
 	--end,
-	["bgmvolume"] = function() return gameOption("Sound.BGMVolume") .. "%" end,
-	["credits"] = function() return options.f_definedDisplay(gameOption("Options.Credits"), { [0] = motif.option_info.menu_valuename_disabled }, gameOption("Options.Credits")) end,
-	["debugkeys"] = function() return options.f_boolDisplay(gameOption("Debug.AllowDebugKeys"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled) end,
-	["debugmode"] = function() return options.f_boolDisplay(gameOption("Debug.AllowDebugMode"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled) end,
-	["difficulty"] = function() return gameOption("Options.Difficulty") end,
-	["enablemodel"] = function() return options.f_definedDisplay(gameOption("Video.EnableModel"), { [true] = motif.option_info.menu_valuename_enabled }, motif.option_info.menu_valuename_disabled) end,
-	["enablemodelshadow"] = function() return options.f_definedDisplay(gameOption("Video.EnableModelShadow"), { [true] = motif.option_info.menu_valuename_enabled }, motif.option_info.menu_valuename_disabled) end,
-	["explodmax"] = function() return gameOption("Config.ExplodMax") end,
-	["fullscreen"] = function() return options.f_boolDisplay(gameOption("Video.Fullscreen")) end,
-	["gamespeed"] = function() return options.f_boolDisplay(gameOption("Options.GameSpeed") == 0, motif.option_info.menu_valuename_normal, options.f_boolDisplay(gameOption("Options.GameSpeed") < 0, motif.option_info.menu_valuename_slow:gsub("%%i", tostring(0 - gameOption("Options.GameSpeed"))), motif.option_info.menu_valuename_fast:gsub("%%i", tostring(gameOption("Options.GameSpeed"))))) end,
-	["guardbreak"] = function() return options.f_boolDisplay(gameOption("Options.GuardBreak")) end,
-	["helpermax"] = function() return gameOption("Config.HelperMax") end,
+	["bgmvolume"] = function()
+		return gameOption("Sound.BGMVolume") .. "%"
+	end,
+	["credits"] = function()
+		return options.f_definedDisplay(gameOption("Options.Credits"), { [0] = motif.option_info.menu_valuename_disabled }, gameOption("Options.Credits"))
+	end,
+	["debugkeys"] = function()
+		return options.f_boolDisplay(gameOption("Debug.AllowDebugKeys"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled)
+	end,
+	["debugmode"] = function()
+		return options.f_boolDisplay(gameOption("Debug.AllowDebugMode"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled)
+	end,
+	["difficulty"] = function()
+		return gameOption("Options.Difficulty")
+	end,
+	["enablemodel"] = function()
+		return options.f_definedDisplay(gameOption("Video.EnableModel"), { [true] = motif.option_info.menu_valuename_enabled }, motif.option_info.menu_valuename_disabled)
+	end,
+	["enablemodelshadow"] = function()
+		return options.f_definedDisplay(gameOption("Video.EnableModelShadow"), { [true] = motif.option_info.menu_valuename_enabled }, motif.option_info.menu_valuename_disabled)
+	end,
+	["explodmax"] = function()
+		return gameOption("Config.ExplodMax")
+	end,
+	["fullscreen"] = function()
+		return options.f_boolDisplay(gameOption("Video.Fullscreen"))
+	end,
+	["gamespeed"] = function()
+		return options.f_boolDisplay(gameOption("Options.GameSpeed") == 0, motif.option_info.menu_valuename_normal, options.f_boolDisplay(gameOption("Options.GameSpeed") < 0, motif.option_info.menu_valuename_slow:gsub("%%i", tostring(0 - gameOption("Options.GameSpeed"))), motif.option_info.menu_valuename_fast:gsub("%%i", tostring(gameOption("Options.GameSpeed")))))
+	end,
+	["guardbreak"] = function()
+		return options.f_boolDisplay(gameOption("Options.GuardBreak"))
+	end,
+	["helpermax"] = function()
+		return gameOption("Config.HelperMax")
+	end,
 	--[[
 	['stagefit'] = function()
 		return options.f_boolDisplay(gameOption('Video.StageFit'), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled)
 	end,
 	]]
-	["keepaspect"] = function() return options.f_boolDisplay(gameOption("Video.KeepAspect"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled) end,
+	["keepaspect"] = function()
+		return options.f_boolDisplay(gameOption("Video.KeepAspect"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled)
+	end,
 	["language"] = function()
 		sfs = motif.languages[gameOption("Config.Language")]
 		return sfs or gameOption("Config.Language")
 	end,
-	["lifemul"] = function() return gameOption("Options.Life") .. "%" end,
-	["losekosimul"] = function() return options.f_boolDisplay(gameOption("Options.Simul.LoseOnKO")) end,
-	["losekotag"] = function() return options.f_boolDisplay(gameOption("Options.Tag.LoseOnKO")) end,
-	["mastervolume"] = function() return gameOption("Sound.MasterVolume") .. "%" end,
-	["maxdrawgames"] = function() return main.maxDrawGames[1] end,
-	["maxsimul"] = function() return gameOption("Options.Simul.Max") end,
-	["maxtag"] = function() return gameOption("Options.Tag.Max") end,
-	["maxturns"] = function() return gameOption("Options.Turns.Max") end,
-	["minsimul"] = function() return gameOption("Options.Simul.Min") end,
-	["mintag"] = function() return gameOption("Options.Tag.Min") end,
-	["minturns"] = function() return gameOption("Options.Turns.Min") end,
-	["msaa"] = function() return options.f_definedDisplay(gameOption("Video.MSAA"), { [0] = motif.option_info.menu_valuename_disabled }, gameOption("Video.MSAA") .. "x") end,
-	["palettemax"] = function() return gameOption("Config.PaletteMax") end,
-	["panningrange"] = function() return gameOption("Sound.PanningRange") .. "%" end,
-	["players"] = function() return gameOption("Config.Players") end,
-	["portchange"] = function() return gameOption("Netplay.ListenPort") end,
-	["projectilemax"] = function() return gameOption("Config.ProjectileMax") end,
-	["quickcontinue"] = function() return options.f_boolDisplay(gameOption("Options.QuickContinue")) end,
-	["ratio1attack"] = function() return options.f_displayRatio(gameOption("Options.Ratio.Level1.Attack")) end,
-	["ratio1life"] = function() return options.f_displayRatio(gameOption("Options.Ratio.Level1.Life")) end,
-	["ratio2attack"] = function() return options.f_displayRatio(gameOption("Options.Ratio.Level2.Attack")) end,
-	["ratio2life"] = function() return options.f_displayRatio(gameOption("Options.Ratio.Level2.Life")) end,
-	["ratio3attack"] = function() return options.f_displayRatio(gameOption("Options.Ratio.Level3.Attack")) end,
-	["ratio3life"] = function() return options.f_displayRatio(gameOption("Options.Ratio.Level3.Life")) end,
-	["ratio4attack"] = function() return options.f_displayRatio(gameOption("Options.Ratio.Level4.Attack")) end,
-	["ratio4life"] = function() return options.f_displayRatio(gameOption("Options.Ratio.Level4.Life")) end,
-	["ratiorecoverybase"] = function() return gameOption("Options.Ratio.Recovery.Base") .. "%" end,
-	["ratiorecoverybonus"] = function() return gameOption("Options.Ratio.Recovery.Bonus") .. "%" end,
-	["redlife"] = function() return options.f_boolDisplay(gameOption("Options.RedLife")) end,
-	["renderer"] = function() return gameOption("Video.RenderMode") end,
-	["resolution"] = function() return gameOption("Video.GameWidth") .. "x" .. gameOption("Video.GameHeight") end,
-	["roundsnumsimul"] = function() return main.roundsNumSimul[1] end,
-	["roundsnumsingle"] = function() return main.roundsNumSingle[1] end,
-	["roundsnumtag"] = function() return main.roundsNumTag[1] end,
-	["roundtime"] = function() return options.f_definedDisplay(gameOption("Options.Time"), { [-1] = motif.option_info.menu_valuename_none }, gameOption("Options.Time")) end,
-	["sfxvolume"] = function() return gameOption("Sound.WavVolume") .. "%" end,
-	["shaders"] = function() return options.f_boolDisplay(#gameOption("Video.ExternalShaders") > 0, motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled) end,
-	["singlevsteamlife"] = function() return gameOption("Options.Team.SingleVsTeamLife") .. "%" end,
-	["stereoeffects"] = function() return options.f_boolDisplay(gameOption("Sound.StereoEffects"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled) end,
-	["dizzy"] = function() return options.f_boolDisplay(gameOption("Options.Dizzy")) end,
-	["teamduplicates"] = function() return options.f_boolDisplay(gameOption("Options.Team.Duplicates")) end,
-	["teamlifeshare"] = function() return options.f_boolDisplay(gameOption("Options.Team.LifeShare")) end,
-	["teampowershare"] = function() return options.f_boolDisplay(gameOption("Options.Team.PowerShare")) end,
-	["textmax"] = function() return gameOption("Config.TextMax") end,
-	["turnsrecoverybase"] = function() return gameOption("Options.Turns.Recovery.Base") .. "%" end,
-	["turnsrecoverybonus"] = function() return gameOption("Options.Turns.Recovery.Bonus") .. "%" end,
-	["vsync"] = function() return options.f_definedDisplay(gameOption("Video.VSync"), { [1] = motif.option_info.menu_valuename_enabled }, motif.option_info.menu_valuename_disabled) end,
-	["windowscalemode"] = function() return options.f_boolDisplay(gameOption("Video.WindowScaleMode"), "Bilinear", "Nearest") end,
+	["lifemul"] = function()
+		return gameOption("Options.Life") .. "%"
+	end,
+	["losekosimul"] = function()
+		return options.f_boolDisplay(gameOption("Options.Simul.LoseOnKO"))
+	end,
+	["losekotag"] = function()
+		return options.f_boolDisplay(gameOption("Options.Tag.LoseOnKO"))
+	end,
+	["mastervolume"] = function()
+		return gameOption("Sound.MasterVolume") .. "%"
+	end,
+	["maxdrawgames"] = function()
+		return main.maxDrawGames[1]
+	end,
+	["maxsimul"] = function()
+		return gameOption("Options.Simul.Max")
+	end,
+	["maxtag"] = function()
+		return gameOption("Options.Tag.Max")
+	end,
+	["maxturns"] = function()
+		return gameOption("Options.Turns.Max")
+	end,
+	["minsimul"] = function()
+		return gameOption("Options.Simul.Min")
+	end,
+	["mintag"] = function()
+		return gameOption("Options.Tag.Min")
+	end,
+	["minturns"] = function()
+		return gameOption("Options.Turns.Min")
+	end,
+	["msaa"] = function()
+		return options.f_definedDisplay(gameOption("Video.MSAA"), { [0] = motif.option_info.menu_valuename_disabled }, gameOption("Video.MSAA") .. "x")
+	end,
+	["palettemax"] = function()
+		return gameOption("Config.PaletteMax")
+	end,
+	["panningrange"] = function()
+		return gameOption("Sound.PanningRange") .. "%"
+	end,
+	["players"] = function()
+		return gameOption("Config.Players")
+	end,
+	["portchange"] = function()
+		return gameOption("Netplay.ListenPort")
+	end,
+	["projectilemax"] = function()
+		return gameOption("Config.ProjectileMax")
+	end,
+	["quickcontinue"] = function()
+		return options.f_boolDisplay(gameOption("Options.QuickContinue"))
+	end,
+	["ratio1attack"] = function()
+		return options.f_displayRatio(gameOption("Options.Ratio.Level1.Attack"))
+	end,
+	["ratio1life"] = function()
+		return options.f_displayRatio(gameOption("Options.Ratio.Level1.Life"))
+	end,
+	["ratio2attack"] = function()
+		return options.f_displayRatio(gameOption("Options.Ratio.Level2.Attack"))
+	end,
+	["ratio2life"] = function()
+		return options.f_displayRatio(gameOption("Options.Ratio.Level2.Life"))
+	end,
+	["ratio3attack"] = function()
+		return options.f_displayRatio(gameOption("Options.Ratio.Level3.Attack"))
+	end,
+	["ratio3life"] = function()
+		return options.f_displayRatio(gameOption("Options.Ratio.Level3.Life"))
+	end,
+	["ratio4attack"] = function()
+		return options.f_displayRatio(gameOption("Options.Ratio.Level4.Attack"))
+	end,
+	["ratio4life"] = function()
+		return options.f_displayRatio(gameOption("Options.Ratio.Level4.Life"))
+	end,
+	["ratiorecoverybase"] = function()
+		return gameOption("Options.Ratio.Recovery.Base") .. "%"
+	end,
+	["ratiorecoverybonus"] = function()
+		return gameOption("Options.Ratio.Recovery.Bonus") .. "%"
+	end,
+	["redlife"] = function()
+		return options.f_boolDisplay(gameOption("Options.RedLife"))
+	end,
+	["renderer"] = function()
+		return gameOption("Video.RenderMode")
+	end,
+	["resolution"] = function()
+		return gameOption("Video.GameWidth") .. "x" .. gameOption("Video.GameHeight")
+	end,
+	["roundsnumsimul"] = function()
+		return main.roundsNumSimul[1]
+	end,
+	["roundsnumsingle"] = function()
+		return main.roundsNumSingle[1]
+	end,
+	["roundsnumtag"] = function()
+		return main.roundsNumTag[1]
+	end,
+	["roundtime"] = function()
+		return options.f_definedDisplay(gameOption("Options.Time"), { [-1] = motif.option_info.menu_valuename_none }, gameOption("Options.Time"))
+	end,
+	["sfxvolume"] = function()
+		return gameOption("Sound.WavVolume") .. "%"
+	end,
+	["shaders"] = function()
+		return options.f_boolDisplay(#gameOption("Video.ExternalShaders") > 0, motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled)
+	end,
+	["singlevsteamlife"] = function()
+		return gameOption("Options.Team.SingleVsTeamLife") .. "%"
+	end,
+	["stereoeffects"] = function()
+		return options.f_boolDisplay(gameOption("Sound.StereoEffects"), motif.option_info.menu_valuename_enabled, motif.option_info.menu_valuename_disabled)
+	end,
+	["dizzy"] = function()
+		return options.f_boolDisplay(gameOption("Options.Dizzy"))
+	end,
+	["teamduplicates"] = function()
+		return options.f_boolDisplay(gameOption("Options.Team.Duplicates"))
+	end,
+	["teamlifeshare"] = function()
+		return options.f_boolDisplay(gameOption("Options.Team.LifeShare"))
+	end,
+	["teampowershare"] = function()
+		return options.f_boolDisplay(gameOption("Options.Team.PowerShare"))
+	end,
+	["textmax"] = function()
+		return gameOption("Config.TextMax")
+	end,
+	["turnsrecoverybase"] = function()
+		return gameOption("Options.Turns.Recovery.Base") .. "%"
+	end,
+	["turnsrecoverybonus"] = function()
+		return gameOption("Options.Turns.Recovery.Bonus") .. "%"
+	end,
+	["vsync"] = function()
+		return options.f_definedDisplay(gameOption("Video.VSync"), { [1] = motif.option_info.menu_valuename_enabled }, motif.option_info.menu_valuename_disabled)
+	end,
+	["windowscalemode"] = function()
+		return options.f_boolDisplay(gameOption("Video.WindowScaleMode"), "Bilinear", "Nearest")
+	end,
 }
 
 -- Returns setting value rendered alongside menu item name (calls appropriate
@@ -1788,7 +1924,9 @@ end
 --;===========================================================
 --; KEY SETTINGS
 --;===========================================================
-local function f_keyCfgText() return { text:create {}, text:create {} } end
+local function f_keyCfgText()
+	return { text:create {}, text:create {} }
+end
 local t_keyCfg = {
 	{ data = f_keyCfgText(), itemname = "empty", displayname = "" },
 	{ data = f_keyCfgText(), itemname = "configall", displayname = motif.option_info.keymenu_itemname_configall, infodata = f_keyCfgText(), infodisplay = "" },

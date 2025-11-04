@@ -45,11 +45,17 @@ for k, v in pairs(escape_char_map) do
 	escape_char_map_inv[v] = k
 end
 
-local function make_indent(state) return string.rep(" ", state.currentIndentLevel * state.opts.indent) end
+local function make_indent(state)
+	return string.rep(" ", state.currentIndentLevel * state.opts.indent)
+end
 
-local function escape_char(c) return "\\" .. (escape_char_map[c] or string.format("u%04x", c:byte())) end
+local function escape_char(c)
+	return "\\" .. (escape_char_map[c] or string.format("u%04x", c:byte()))
+end
 
-local function encode_nil() return "null" end
+local function encode_nil()
+	return "null"
+end
 
 local json_object_tag = {}
 
@@ -96,7 +102,6 @@ local function encode_table(val, state)
 			return "[]"
 		end
 		return open_bracket .. table.concat(res, comma) .. close_bracket
-
 	else
 		-- Treat as an object
 		for k, v in pairs(val) do
@@ -115,7 +120,9 @@ local function encode_table(val, state)
 	end
 end
 
-local function encode_string(val) return '"' .. val:gsub('[%z\1-\31\\"]', escape_char) .. '"' end
+local function encode_string(val)
+	return '"' .. val:gsub('[%z\1-\31\\"]', escape_char) .. '"'
+end
 
 local function encode_number(val)
 	-- Check for NaN, -inf and inf
@@ -240,7 +247,6 @@ local function parse_string(str, i)
 
 		if x < 32 then
 			decode_error(str, j, "control character in string")
-
 		elseif x == 92 then -- `\`: Escape
 			res = res .. str:sub(k, j - 1)
 			j = j + 1
@@ -256,7 +262,6 @@ local function parse_string(str, i)
 				res = res .. escape_char_map_inv[c]
 			end
 			k = j + 1
-
 		elseif x == 34 then -- `"`: End of string
 			res = res .. str:sub(k, j - 1)
 			return res, j + 1

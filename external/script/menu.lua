@@ -323,13 +323,27 @@ menu.t_vardisplayPointers = {}
 -- Associative elements table storing functions returning current setting values
 -- rendered alongside menu item name. Can be appended via external module.
 menu.t_vardisplay = {
-	["dummycontrol"] = function() return menu.t_valuename.dummycontrol[menu.dummycontrol or 1].displayname end,
-	["ailevel"] = function() return menu.t_valuename.ailevel[menu.ailevel or gameOption("Options.Difficulty")].displayname end,
-	["dummymode"] = function() return menu.t_valuename.dummymode[menu.dummymode or 1].displayname end,
-	["guardmode"] = function() return menu.t_valuename.guardmode[menu.guardmode or 1].displayname end,
-	["fallrecovery"] = function() return menu.t_valuename.fallrecovery[menu.fallrecovery or 1].displayname end,
-	["distance"] = function() return menu.t_valuename.distance[menu.distance or 1].displayname end,
-	["buttonjam"] = function() return menu.t_valuename.buttonjam[menu.buttonjam or 1].displayname end,
+	["dummycontrol"] = function()
+		return menu.t_valuename.dummycontrol[menu.dummycontrol or 1].displayname
+	end,
+	["ailevel"] = function()
+		return menu.t_valuename.ailevel[menu.ailevel or gameOption("Options.Difficulty")].displayname
+	end,
+	["dummymode"] = function()
+		return menu.t_valuename.dummymode[menu.dummymode or 1].displayname
+	end,
+	["guardmode"] = function()
+		return menu.t_valuename.guardmode[menu.guardmode or 1].displayname
+	end,
+	["fallrecovery"] = function()
+		return menu.t_valuename.fallrecovery[menu.fallrecovery or 1].displayname
+	end,
+	["distance"] = function()
+		return menu.t_valuename.distance[menu.distance or 1].displayname
+	end,
+	["buttonjam"] = function()
+		return menu.t_valuename.buttonjam[menu.buttonjam or 1].displayname
+	end,
 }
 
 -- Returns setting value rendered alongside menu item name (calls appropriate
@@ -574,7 +588,11 @@ function menu.f_commandlistParse()
 				if start.f_getCharData(sel.ref).commandlist == nil then
 					local movelist = getCharMovelist(sel.ref)
 					if movelist ~= "" then
-						for k, v in main.f_sortKeys(motif.glyphs, function(t, a, b) return string.len(a) > string.len(b) end) do
+						for k, v in
+							main.f_sortKeys(motif.glyphs, function(t, a, b)
+								return string.len(a) > string.len(b)
+							end)
+						do
 							movelist = movelist:gsub(main.f_escapePattern(k), "<" .. numberToRune(v[1] + 0xe000) .. ">")
 						end
 						local t = {}

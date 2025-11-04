@@ -326,7 +326,9 @@ function main.f_printTable(t, toFile)
 end
 
 --prints "v" variable into "toFile" file
-function main.f_printVar(v, toFile) main.f_fileWrite(toFile or "debug/var_print.txt", v) end
+function main.f_printVar(v, toFile)
+	main.f_fileWrite(toFile or "debug/var_print.txt", v)
+end
 
 --split strings
 function main.f_strsplit(delimiter, text)
@@ -356,7 +358,9 @@ function main.f_strsplit(delimiter, text)
 end
 
 --escape ().%+-*?[^$ characters
-function main.f_escapePattern(str) return str:gsub("([^%w])", "%%%1") end
+function main.f_escapePattern(str)
+	return str:gsub("([^%w])", "%%%1")
+end
 
 --return argument or default value
 function main.f_arg(arg, default)
@@ -489,7 +493,9 @@ function hook.run(list, ...)
 		end
 	end
 end
-function hook.stop(list, name) hook.lists[list][name] = nil end
+function hook.stop(list, name)
+	hook.lists[list][name] = nil
+end
 
 text = {}
 color = {}
@@ -695,7 +701,9 @@ function color:toHex(lua)
 end
 
 --returns r, g, b, src, dst
-function color:unpack() return tonumber(self.r), tonumber(self.g), tonumber(self.b), tonumber(self.src), tonumber(self.dst) end
+function color:unpack()
+	return tonumber(self.r), tonumber(self.g), tonumber(self.b), tonumber(self.src), tonumber(self.dst)
+end
 
 --create rect
 function rect:create(t)
@@ -940,7 +948,9 @@ function main.f_animFromTable(t, sff, x, y, scaleX, scaleY, facing, infFrame, de
 end
 
 --print array
-function main.f_arrayPrint(t) print("{" .. table.concat(t, ",") .. "}") end
+function main.f_arrayPrint(t)
+	print("{" .. table.concat(t, ",") .. "}")
+end
 
 --copy table content into new table
 function main.f_tableCopy(t)
@@ -1002,7 +1012,9 @@ function main.f_tableRotate(t, num)
 end
 
 --shift table elements
-function main.f_tableShift(t, old, new) table.insert(t, new, table.remove(t, old)) end
+function main.f_tableShift(t, old, new)
+	table.insert(t, new, table.remove(t, old))
+end
 
 --remove from table
 function main.f_tableRemove(t, value)
@@ -1153,7 +1165,9 @@ function main.f_sortKeys(t, order)
 	-- if order function given, sort it by passing the table and keys a, b,
 	-- otherwise just sort the keys
 	if order then
-		table.sort(keys, function(a, b) return order(t, a, b) end)
+		table.sort(keys, function(a, b)
+			return order(t, a, b)
+		end)
 	else
 		table.sort(keys)
 	end
@@ -1370,7 +1384,9 @@ function main.f_ySpacing(t, key)
 end
 
 --count occurrences of a substring
-function main.f_countSubstring(s1, s2) return select(2, s1:gsub(s2, "")) end
+function main.f_countSubstring(s1, s2)
+	return select(2, s1:gsub(s2, ""))
+end
 
 --update rounds to win variables
 main.roundsNumSingle = {}
@@ -1570,7 +1586,11 @@ function main.f_commandLine()
 		main.f_printTable(t, "debug/t_quickvs.txt")
 	end
 	--iterate over the table in -p order ascending
-	for _, v in main.f_sortKeys(t, function(t, a, b) return t[b].num > t[a].num end) do
+	for _, v in
+		main.f_sortKeys(t, function(t, a, b)
+			return t[b].num > t[a].num
+		end)
+	do
 		if main.t_charDef[v.character:lower()] == nil then
 			if main.flags["-loadmotif"] ~= nil then
 				main.f_addChar(v.character, true, true)
@@ -2681,7 +2701,9 @@ main.t_itemname = {
 		return start.f_selectMode
 	end,
 	--DEMO
-	["demo"] = function() return main.f_demoStart end,
+	["demo"] = function()
+		return main.f_demoStart
+	end,
 	--FREE BATTLE (QUICK VS)
 	["freebattle"] = function()
 		main.f_playerInput(main.playerInput, 1)
@@ -2842,7 +2864,9 @@ main.t_itemname = {
 		return options.menu.loop
 	end,
 	--REPLAY
-	["replay"] = function() return main.f_replay end,
+	["replay"] = function()
+		return main.f_replay
+	end,
 	--SERVER CONNECT
 	["serverconnect"] = function(t, item)
 		sndPlay(motif.files.snd_data, motif[main.group].cursor_done_snd[1], motif[main.group].cursor_done_snd[2]) -- Needs manual sndPlay due to special menu behavior

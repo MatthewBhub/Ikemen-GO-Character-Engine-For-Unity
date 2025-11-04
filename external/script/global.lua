@@ -121,7 +121,9 @@ function debugFlag(side)
 	end
 end
 
-function closeMenu() main.pauseMenu = false end
+function closeMenu()
+	main.pauseMenu = false
+end
 
 --;===========================================================
 --; MCONSOLE EQUIVALENTS
@@ -212,13 +214,21 @@ function boolToInt(bool)
 	return 0
 end
 
-function engineInfo() return string.format("Frames: %d, VSync: %d; Speed: %d/%d%%; FPS: %.3f", roundtime(), gameOption("Video.VSync"), tickspersecond(), gamespeed(), gamefps()) end
+function engineInfo()
+	return string.format("Frames: %d, VSync: %d; Speed: %d/%d%%; FPS: %.3f", roundtime(), gameOption("Video.VSync"), tickspersecond(), gamespeed(), gamefps())
+end
 
-function playerInfo() return string.format("%s %d%s", name(), id(), customState()) end
+function playerInfo()
+	return string.format("%s %d%s", name(), id(), customState())
+end
 
-function actionInfo() return string.format("ActionID: %d (P%d); SPR: %d,%d; ElemNo: %d/%d; Time: %d/%d (%d/%d)", anim(), animplayerno(), animelemvar("group"), animelemvar("image"), animelemno(0), animelemcount(), animelemtime(animelemno(0)), animelemvar("time"), animtimesum(), animlength()) end
+function actionInfo()
+	return string.format("ActionID: %d (P%d); SPR: %d,%d; ElemNo: %d/%d; Time: %d/%d (%d/%d)", anim(), animplayerno(), animelemvar("group"), animelemvar("image"), animelemno(0), animelemcount(), animelemtime(animelemno(0)), animelemvar("time"), animtimesum(), animlength())
+end
 
-function stateInfo() return string.format("State No: %d (P%d); CTRL: %s; Type: %s; MoveType: %s; Physics: %s; Time: %d", stateno(), stateownerplayerno(), boolToInt(ctrl()), statetype(), movetype(), physics(), time() - 1) end
+function stateInfo()
+	return string.format("State No: %d (P%d); CTRL: %s; Type: %s; MoveType: %s; Physics: %s; Time: %d", stateno(), stateownerplayerno(), boolToInt(ctrl()), statetype(), movetype(), physics(), time() - 1)
+end
 
 loadDebugInfo { "engineInfo", "playerInfo", "actionInfo", "stateInfo" }
 
