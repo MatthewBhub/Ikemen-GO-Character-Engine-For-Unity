@@ -8,55 +8,55 @@ local menu = {}
 -- Can be appended via external module.
 menu.t_valuename = {
 	dummycontrol = {
-		{itemname = 'cooperative', displayname = motif.training_info.menu_valuename_dummycontrol_cooperative},
-		{itemname = 'ai', displayname = motif.training_info.menu_valuename_dummycontrol_ai},
-		{itemname = 'manual', displayname = motif.training_info.menu_valuename_dummycontrol_manual},
+		{ itemname = "cooperative", displayname = motif.training_info.menu_valuename_dummycontrol_cooperative },
+		{ itemname = "ai", displayname = motif.training_info.menu_valuename_dummycontrol_ai },
+		{ itemname = "manual", displayname = motif.training_info.menu_valuename_dummycontrol_manual },
 	},
 	ailevel = {
-		{itemname = '1', displayname = motif.training_info.menu_valuename_ailevel_1},
-		{itemname = '2', displayname = motif.training_info.menu_valuename_ailevel_2},
-		{itemname = '3', displayname = motif.training_info.menu_valuename_ailevel_3},
-		{itemname = '4', displayname = motif.training_info.menu_valuename_ailevel_4},
-		{itemname = '5', displayname = motif.training_info.menu_valuename_ailevel_5},
-		{itemname = '6', displayname = motif.training_info.menu_valuename_ailevel_6},
-		{itemname = '7', displayname = motif.training_info.menu_valuename_ailevel_7},
-		{itemname = '8', displayname = motif.training_info.menu_valuename_ailevel_8},
+		{ itemname = "1", displayname = motif.training_info.menu_valuename_ailevel_1 },
+		{ itemname = "2", displayname = motif.training_info.menu_valuename_ailevel_2 },
+		{ itemname = "3", displayname = motif.training_info.menu_valuename_ailevel_3 },
+		{ itemname = "4", displayname = motif.training_info.menu_valuename_ailevel_4 },
+		{ itemname = "5", displayname = motif.training_info.menu_valuename_ailevel_5 },
+		{ itemname = "6", displayname = motif.training_info.menu_valuename_ailevel_6 },
+		{ itemname = "7", displayname = motif.training_info.menu_valuename_ailevel_7 },
+		{ itemname = "8", displayname = motif.training_info.menu_valuename_ailevel_8 },
 	},
 	dummymode = {
-		{itemname = 'stand', displayname = motif.training_info.menu_valuename_dummymode_stand},
-		{itemname = 'crouch', displayname = motif.training_info.menu_valuename_dummymode_crouch},
-		{itemname = 'jump', displayname = motif.training_info.menu_valuename_dummymode_jump},
-		{itemname = 'wjump', displayname = motif.training_info.menu_valuename_dummymode_wjump},
+		{ itemname = "stand", displayname = motif.training_info.menu_valuename_dummymode_stand },
+		{ itemname = "crouch", displayname = motif.training_info.menu_valuename_dummymode_crouch },
+		{ itemname = "jump", displayname = motif.training_info.menu_valuename_dummymode_jump },
+		{ itemname = "wjump", displayname = motif.training_info.menu_valuename_dummymode_wjump },
 	},
 	guardmode = {
-		{itemname = 'none', displayname = motif.training_info.menu_valuename_guardmode_none},
-		{itemname = 'auto', displayname = motif.training_info.menu_valuename_guardmode_auto},
-		{itemname = 'all', displayname = motif.training_info.menu_valuename_guardmode_all},
-		{itemname = 'random', displayname = motif.training_info.menu_valuename_guardmode_random},
+		{ itemname = "none", displayname = motif.training_info.menu_valuename_guardmode_none },
+		{ itemname = "auto", displayname = motif.training_info.menu_valuename_guardmode_auto },
+		{ itemname = "all", displayname = motif.training_info.menu_valuename_guardmode_all },
+		{ itemname = "random", displayname = motif.training_info.menu_valuename_guardmode_random },
 	},
 	fallrecovery = {
-		{itemname = 'none', displayname = motif.training_info.menu_valuename_fallrecovery_none},
-		{itemname = 'ground', displayname = motif.training_info.menu_valuename_fallrecovery_ground},
-		{itemname = 'air', displayname = motif.training_info.menu_valuename_fallrecovery_air},
-		{itemname = 'random', displayname = motif.training_info.menu_valuename_fallrecovery_random},
+		{ itemname = "none", displayname = motif.training_info.menu_valuename_fallrecovery_none },
+		{ itemname = "ground", displayname = motif.training_info.menu_valuename_fallrecovery_ground },
+		{ itemname = "air", displayname = motif.training_info.menu_valuename_fallrecovery_air },
+		{ itemname = "random", displayname = motif.training_info.menu_valuename_fallrecovery_random },
 	},
 	distance = {
-		{itemname = 'any', displayname = motif.training_info.menu_valuename_distance_any},
-		{itemname = 'close', displayname = motif.training_info.menu_valuename_distance_close},
-		{itemname = 'medium', displayname = motif.training_info.menu_valuename_distance_medium},
-		{itemname = 'far', displayname = motif.training_info.menu_valuename_distance_far},
+		{ itemname = "any", displayname = motif.training_info.menu_valuename_distance_any },
+		{ itemname = "close", displayname = motif.training_info.menu_valuename_distance_close },
+		{ itemname = "medium", displayname = motif.training_info.menu_valuename_distance_medium },
+		{ itemname = "far", displayname = motif.training_info.menu_valuename_distance_far },
 	},
 	buttonjam = {
-		{itemname = 'none', displayname = motif.training_info.menu_valuename_buttonjam_none},
-		{itemname = 'a', displayname = motif.training_info.menu_valuename_buttonjam_a},
-		{itemname = 'b', displayname = motif.training_info.menu_valuename_buttonjam_b},
-		{itemname = 'c', displayname = motif.training_info.menu_valuename_buttonjam_c},
-		{itemname = 'x', displayname = motif.training_info.menu_valuename_buttonjam_x},
-		{itemname = 'y', displayname = motif.training_info.menu_valuename_buttonjam_y},
-		{itemname = 'z', displayname = motif.training_info.menu_valuename_buttonjam_z},
-		{itemname = 's', displayname = motif.training_info.menu_valuename_buttonjam_s},
-		{itemname = 'd', displayname = motif.training_info.menu_valuename_buttonjam_d},
-		{itemname = 'w', displayname = motif.training_info.menu_valuename_buttonjam_w},
+		{ itemname = "none", displayname = motif.training_info.menu_valuename_buttonjam_none },
+		{ itemname = "a", displayname = motif.training_info.menu_valuename_buttonjam_a },
+		{ itemname = "b", displayname = motif.training_info.menu_valuename_buttonjam_b },
+		{ itemname = "c", displayname = motif.training_info.menu_valuename_buttonjam_c },
+		{ itemname = "x", displayname = motif.training_info.menu_valuename_buttonjam_x },
+		{ itemname = "y", displayname = motif.training_info.menu_valuename_buttonjam_y },
+		{ itemname = "z", displayname = motif.training_info.menu_valuename_buttonjam_z },
+		{ itemname = "s", displayname = motif.training_info.menu_valuename_buttonjam_s },
+		{ itemname = "d", displayname = motif.training_info.menu_valuename_buttonjam_d },
+		{ itemname = "w", displayname = motif.training_info.menu_valuename_buttonjam_w },
 	},
 }
 
@@ -67,9 +67,9 @@ menu.t_valuename = {
 function menu.f_valueChanged(t, m)
 	local valueitem = menu[t.itemname] or 1
 	local chk = valueitem
-	if main.f_input(main.t_players, {'$F'}) then
+	if main.f_input(main.t_players, { "$F" }) then
 		valueitem = valueitem + 1
-	elseif main.f_input(main.t_players, {'$B'}) then
+	elseif main.f_input(main.t_players, { "$B" }) then
 		valueitem = valueitem - 1
 	end
 	if valueitem > #menu.t_valuename[t.itemname] then
@@ -89,14 +89,14 @@ function menu.f_valueChanged(t, m)
 end
 
 -- Current pause menu itemname for internal use (key from menu.t_itemname table)
-menu.itemname = ''
+menu.itemname = ""
 
 -- Associative elements table storing functions controlling behaviour of each
 -- pause menu item. Can be appended via external module.
 menu.t_itemname = {
 	--Back
-	['back'] = function(t, item, cursorPosY, moveTxt, section)
-		if main.f_input(main.t_players, {'pal', 's'}) then
+	["back"] = function(t, item, cursorPosY, moveTxt, section)
+		if main.f_input(main.t_players, { "pal", "s" }) then
 			if menu.currentMenu[1] == menu.currentMenu[2] then
 				sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
 				togglePause(false)
@@ -113,25 +113,25 @@ menu.t_itemname = {
 		return true
 	end,
 	--Dummy Control
-	['dummycontrol'] = function(t, item, cursorPosY, moveTxt, section)
+	["dummycontrol"] = function(t, item, cursorPosY, moveTxt, section)
 		local ok, name = menu.f_valueChanged(t.items[item], motif[section])
 		if ok then
-			if name == 'cooperative' or name == 'manual' then
+			if name == "cooperative" or name == "manual" then
 				player(2)
 				setAILevel(0)
-			elseif name == 'ai' then
+			elseif name == "ai" then
 				player(2)
 				setAILevel(menu.ailevel)
 			end
 			player(2)
-			mapSet('_iksys_trainingDummyControl', menu.dummycontrol - 1)
+			mapSet("_iksys_trainingDummyControl", menu.dummycontrol - 1)
 		end
 		return true
 	end,
 	--AI Level
-	['ailevel'] = function(t, item, cursorPosY, moveTxt, section)
+	["ailevel"] = function(t, item, cursorPosY, moveTxt, section)
 		if menu.f_valueChanged(t.items[item], motif[section]) then
-			if menu.t_valuename.dummycontrol[menu.dummycontrol or 1].itemname == 'ai' then
+			if menu.t_valuename.dummycontrol[menu.dummycontrol or 1].itemname == "ai" then
 				player(2)
 				setAILevel(menu.ailevel)
 			end
@@ -139,79 +139,83 @@ menu.t_itemname = {
 		return true
 	end,
 	--Dummy Mode
-	['dummymode'] = function(t, item, cursorPosY, moveTxt, section)
+	["dummymode"] = function(t, item, cursorPosY, moveTxt, section)
 		if menu.f_valueChanged(t.items[item], motif[section]) then
 			player(2)
-			mapSet('_iksys_trainingDummyMode', menu.dummymode - 1)
+			mapSet("_iksys_trainingDummyMode", menu.dummymode - 1)
 		end
 		return true
 	end,
 	--Guard Mode
-	['guardmode'] = function(t, item, cursorPosY, moveTxt, section)
+	["guardmode"] = function(t, item, cursorPosY, moveTxt, section)
 		if menu.f_valueChanged(t.items[item], motif[section]) then
 			player(2)
-			mapSet('_iksys_trainingGuardMode', menu.guardmode - 1)
+			mapSet("_iksys_trainingGuardMode", menu.guardmode - 1)
 		end
 		return true
 	end,
 	--Fall Recovery
-	['fallrecovery'] = function(t, item, cursorPosY, moveTxt, section)
+	["fallrecovery"] = function(t, item, cursorPosY, moveTxt, section)
 		if menu.f_valueChanged(t.items[item], motif[section]) then
 			player(2)
-			mapSet('_iksys_trainingFallRecovery', menu.fallrecovery - 1)
+			mapSet("_iksys_trainingFallRecovery", menu.fallrecovery - 1)
 		end
 		return true
 	end,
 	--Distance
-	['distance'] = function(t, item, cursorPosY, moveTxt, section)
+	["distance"] = function(t, item, cursorPosY, moveTxt, section)
 		if menu.f_valueChanged(t.items[item], motif[section]) then
 			player(2)
-			mapSet('_iksys_trainingDistance', menu.distance - 1)
+			mapSet("_iksys_trainingDistance", menu.distance - 1)
 		end
 		return true
 	end,
 	--Button Jam
-	['buttonjam'] = function(t, item, cursorPosY, moveTxt, section)
+	["buttonjam"] = function(t, item, cursorPosY, moveTxt, section)
 		if menu.f_valueChanged(t.items[item], motif[section]) then
 			player(2)
-			mapSet('_iksys_trainingButtonJam', menu.buttonjam - 1)
+			mapSet("_iksys_trainingButtonJam", menu.buttonjam - 1)
 		end
 		return true
 	end,
 	--Key Config
-	['keyboard'] = function(t, item, cursorPosY, moveTxt, section)
-		if main.f_input(main.t_players, {'pal', 's'}) --[[or getKey('F1')]] then
+	["keyboard"] = function(t, item, cursorPosY, moveTxt, section)
+		if
+			main.f_input(main.t_players, { "pal", "s" }) --[[or getKey('F1')]]
+		then
 			sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
-			options.f_keyCfgInit('Keys', t.submenu[t.items[item].itemname].title)
+			options.f_keyCfgInit("Keys", t.submenu[t.items[item].itemname].title)
 			menu.itemname = t.items[item].itemname
 		end
 		return true
 	end,
 	--Joystick Config
-	['gamepad'] = function(t, item, cursorPosY, moveTxt, section)
-		if main.f_input(main.t_players, {'pal', 's'}) --[[or getKey('F2')]] then
+	["gamepad"] = function(t, item, cursorPosY, moveTxt, section)
+		if
+			main.f_input(main.t_players, { "pal", "s" }) --[[or getKey('F2')]]
+		then
 			sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
-			options.f_keyCfgInit('Joystick', t.submenu[t.items[item].itemname].title)
+			options.f_keyCfgInit("Joystick", t.submenu[t.items[item].itemname].title)
 			menu.itemname = t.items[item].itemname
 		end
 		return true
 	end,
 	--Default
-	['inputdefault'] = function(t, item, cursorPosY, moveTxt, section)
-		if main.f_input(main.t_players, {'pal', 's'}) then
+	["inputdefault"] = function(t, item, cursorPosY, moveTxt, section)
+		if main.f_input(main.t_players, { "pal", "s" }) then
 			sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
 			options.f_keyDefault()
-			options.f_setKeyConfig('Keys')
-			if main.flags['-nojoy'] == nil then
-				options.f_setKeyConfig('Joystick')
+			options.f_setKeyConfig("Keys")
+			if main.flags["-nojoy"] == nil then
+				options.f_setKeyConfig("Joystick")
 			end
 			options.f_saveCfg(false)
 		end
 		return true
 	end,
 	--Round Reset
-	['reset'] = function(t, item, cursorPosY, moveTxt, section)
-		if main.f_input(main.t_players, {'pal', 's'}) then
+	["reset"] = function(t, item, cursorPosY, moveTxt, section)
+		if main.f_input(main.t_players, { "pal", "s" }) then
 			sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
 			togglePause(false)
 			roundReset()
@@ -221,8 +225,8 @@ menu.t_itemname = {
 		return true
 	end,
 	--Reload (Rematch)
-	['reload'] = function(t, item, cursorPosY, moveTxt, section)
-		if main.f_input(main.t_players, {'pal', 's'}) then
+	["reload"] = function(t, item, cursorPosY, moveTxt, section)
+		if main.f_input(main.t_players, { "pal", "s" }) then
 			sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
 			togglePause(false)
 			reload()
@@ -232,8 +236,8 @@ menu.t_itemname = {
 		return true
 	end,
 	--Command List
-	['commandlist'] = function(t, item, cursorPosY, moveTxt, section)
-		if main.f_input(main.t_players, {'pal', 's'}) then
+	["commandlist"] = function(t, item, cursorPosY, moveTxt, section)
+		if main.f_input(main.t_players, { "pal", "s" }) then
 			sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
 			menu.f_commandlistParse()
 			menu.itemname = t.items[item].itemname
@@ -241,8 +245,8 @@ menu.t_itemname = {
 		return true
 	end,
 	--Character Change
-	['characterchange'] = function(t, item, cursorPosY, moveTxt, section)
-		if main.f_input(main.t_players, {'pal', 's'}) then
+	["characterchange"] = function(t, item, cursorPosY, moveTxt, section)
+		if main.f_input(main.t_players, { "pal", "s" }) then
 			sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
 			togglePause(false)
 			endMatch()
@@ -252,8 +256,8 @@ menu.t_itemname = {
 		return true
 	end,
 	--Exit
-	['exit'] = function(t, item, cursorPosY, moveTxt, section)
-		if main.f_input(main.t_players, {'pal', 's'}) then
+	["exit"] = function(t, item, cursorPosY, moveTxt, section)
+		if main.f_input(main.t_players, { "pal", "s" }) then
 			sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
 			togglePause(false)
 			endMatch()
@@ -283,9 +287,9 @@ function menu.f_createMenu(tbl, section, bgdef, txt_title, bool_main)
 		else
 			main.f_menuCommonDraw(t, tbl.item, tbl.cursorPosY, tbl.moveTxt, section, bgdef, txt_title, motif.defaultMenu, {}, true)
 		end
-		tbl.cursorPosY, tbl.moveTxt, tbl.item = main.f_menuCommonCalc(t, tbl.item, tbl.cursorPosY, tbl.moveTxt, section, {'$U'}, {'$D'})
-		txt_title:update({text = tbl.title})
-		if esc() or main.f_input(main.t_players, {'m'}) then
+		tbl.cursorPosY, tbl.moveTxt, tbl.item = main.f_menuCommonCalc(t, tbl.item, tbl.cursorPosY, tbl.moveTxt, section, { "$U" }, { "$D" })
+		txt_title:update { text = tbl.title }
+		if esc() or main.f_input(main.t_players, { "m" }) then
 			if bool_main then
 				togglePause(false)
 				main.pauseMenu = false
@@ -301,7 +305,7 @@ function menu.f_createMenu(tbl, section, bgdef, txt_title, bool_main)
 			if not menu.t_itemname[t[tbl.item].itemname](tbl, tbl.item, tbl.cursorPosY, tbl.moveTxt, section) then
 				return
 			end
-		elseif main.f_input(main.t_players, {'pal', 's'}) then
+		elseif main.f_input(main.t_players, { "pal", "s" }) then
 			local f = t[tbl.item].itemname
 			if tbl.submenu[f].loop ~= nil then
 				sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
@@ -319,27 +323,13 @@ menu.t_vardisplayPointers = {}
 -- Associative elements table storing functions returning current setting values
 -- rendered alongside menu item name. Can be appended via external module.
 menu.t_vardisplay = {
-	['dummycontrol'] = function()
-		return menu.t_valuename.dummycontrol[menu.dummycontrol or 1].displayname
-	end,
-	['ailevel'] = function()
-		return menu.t_valuename.ailevel[menu.ailevel or gameOption('Options.Difficulty')].displayname
-	end,
-	['dummymode'] = function()
-		return menu.t_valuename.dummymode[menu.dummymode or 1].displayname
-	end,
-	['guardmode'] = function()
-		return menu.t_valuename.guardmode[menu.guardmode or 1].displayname
-	end,
-	['fallrecovery'] = function()
-		return menu.t_valuename.fallrecovery[menu.fallrecovery or 1].displayname
-	end,
-	['distance'] = function()
-		return menu.t_valuename.distance[menu.distance or 1].displayname
-	end,
-	['buttonjam'] = function()
-		return menu.t_valuename.buttonjam[menu.buttonjam or 1].displayname
-	end,
+	["dummycontrol"] = function() return menu.t_valuename.dummycontrol[menu.dummycontrol or 1].displayname end,
+	["ailevel"] = function() return menu.t_valuename.ailevel[menu.ailevel or gameOption("Options.Difficulty")].displayname end,
+	["dummymode"] = function() return menu.t_valuename.dummymode[menu.dummymode or 1].displayname end,
+	["guardmode"] = function() return menu.t_valuename.guardmode[menu.guardmode or 1].displayname end,
+	["fallrecovery"] = function() return menu.t_valuename.fallrecovery[menu.fallrecovery or 1].displayname end,
+	["distance"] = function() return menu.t_valuename.distance[menu.distance or 1].displayname end,
+	["buttonjam"] = function() return menu.t_valuename.buttonjam[menu.buttonjam or 1].displayname end,
 }
 
 -- Returns setting value rendered alongside menu item name (calls appropriate
@@ -351,14 +341,14 @@ function menu.f_vardisplay(itemname)
 	if options.t_vardisplay[itemname] ~= nil then
 		return options.t_vardisplay[itemname]()
 	end
-	return ''
+	return ""
 end
 
 -- Table storing arrays with data used for different pause menu types generation.
 -- Can be appended via external module.
 menu.t_menus = {
-	{id = 'menu', section = 'menu_info', bgdef = 'menubgdef', txt_title = 'txt_title_menu', movelist = true},
-	{id = 'training', section = 'training_info', bgdef = 'trainingbgdef', txt_title = 'txt_title_training', movelist = true},
+	{ id = "menu", section = "menu_info", bgdef = "menubgdef", txt_title = "txt_title_menu", movelist = true },
+	{ id = "training", section = "training_info", bgdef = "trainingbgdef", txt_title = "txt_title_training", movelist = true },
 }
 
 -- Dynamically generates all menus and submenus, iterating over values stored in
@@ -371,27 +361,27 @@ function menu.f_start()
 		motif.setBaseTrainingInfo()
 	end
 	for k, v in ipairs(menu.t_menus) do
-		menu[v.txt_title] = main.f_createTextImg(motif[v.section], 'title', {defsc = motif.defaultMenu})
+		menu[v.txt_title] = main.f_createTextImg(motif[v.section], "title", { defsc = motif.defaultMenu })
 		menu[v.id] = {
 			title = main.f_itemnameUpper(motif[v.section].title_text, motif[v.section].menu_title_uppercase == 1),
 			cursorPosY = 1,
 			moveTxt = 0,
 			item = 1,
 			submenu = {},
-			items = {}
+			items = {},
 		}
 		menu[v.id].loop = menu.f_createMenu(menu[v.id], v.section, v.bgdef, menu[v.txt_title], true)
 		local t_menuWindow = main.f_menuWindow(motif[v.section])
 		local t_pos = {} --for storing current table position
 		local lastNum = 0
 		for i, suffix in ipairs(main.f_tableExists(main.t_sort[v.section]).menu) do
-			for j, c in ipairs(main.f_strsplit('_', suffix)) do --split using "_" delimiter
+			for j, c in ipairs(main.f_strsplit("_", suffix)) do --split using "_" delimiter
 				--appending the menu table
 				if j == 1 then --first string after menu.itemname (either reserved one or custom submenu assignment)
-					if menu[v.id].submenu[c] == nil or c == 'empty' then
+					if menu[v.id].submenu[c] == nil or c == "empty" then
 						menu[v.id].submenu[c] = {}
-						menu[v.id].submenu[c].title = main.f_itemnameUpper(motif[v.section]['menu_itemname_' .. suffix], motif[v.section].menu_title_uppercase == 1)
-						if menu.t_itemname[c] == nil and c ~= 'empty' then
+						menu[v.id].submenu[c].title = main.f_itemnameUpper(motif[v.section]["menu_itemname_" .. suffix], motif[v.section].menu_title_uppercase == 1)
+						if menu.t_itemname[c] == nil and c ~= "empty" then
 							menu[v.id].submenu[c].cursorPosY = 1
 							menu[v.id].submenu[c].moveTxt = 0
 							menu[v.id].submenu[c].item = 1
@@ -399,13 +389,13 @@ function menu.f_start()
 							menu[v.id].submenu[c].items = {}
 							menu[v.id].submenu[c].loop = menu.f_createMenu(menu[v.id].submenu[c], v.section, v.bgdef, menu[v.txt_title], false)
 						end
-						if not suffix:match(c .. '_') then
+						if not suffix:match(c .. "_") then
 							table.insert(menu[v.id].items, {
-								data = text:create({window = t_menuWindow}),
+								data = text:create { window = t_menuWindow },
 								itemname = c,
-								displayname = motif[v.section]['menu_itemname_' .. suffix],
-								paramname = 'menu_itemname_' .. suffix,
-								vardata = text:create({window = t_menuWindow}),
+								displayname = motif[v.section]["menu_itemname_" .. suffix],
+								paramname = "menu_itemname_" .. suffix,
+								vardata = text:create { window = t_menuWindow },
 								vardisplay = menu.f_vardisplay(c),
 								selected = false,
 							})
@@ -415,10 +405,10 @@ function menu.f_start()
 					t_pos = menu[v.id].submenu[c]
 					t_pos.name = c
 				else --following strings
-					if t_pos.submenu[c] == nil or c == 'empty' then
+					if t_pos.submenu[c] == nil or c == "empty" then
 						t_pos.submenu[c] = {}
-						t_pos.submenu[c].title = main.f_itemnameUpper(motif[v.section]['menu_itemname_' .. suffix], motif[v.section].menu_title_uppercase == 1)
-						if menu.t_itemname[c] == nil and c ~= 'empty' then
+						t_pos.submenu[c].title = main.f_itemnameUpper(motif[v.section]["menu_itemname_" .. suffix], motif[v.section].menu_title_uppercase == 1)
+						if menu.t_itemname[c] == nil and c ~= "empty" then
 							t_pos.submenu[c].cursorPosY = 1
 							t_pos.submenu[c].moveTxt = 0
 							t_pos.submenu[c].item = 1
@@ -427,11 +417,11 @@ function menu.f_start()
 							t_pos.submenu[c].loop = menu.f_createMenu(t_pos.submenu[c], v.section, v.bgdef, menu[v.txt_title], false)
 						end
 						table.insert(t_pos.items, {
-							data = text:create({window = t_menuWindow}),
+							data = text:create { window = t_menuWindow },
 							itemname = c,
-							displayname = motif[v.section]['menu_itemname_' .. suffix],
-							paramname = 'menu_itemname_' .. suffix,
-							vardata = text:create({window = t_menuWindow}),
+							displayname = motif[v.section]["menu_itemname_" .. suffix],
+							paramname = "menu_itemname_" .. suffix,
+							vardata = text:create { window = t_menuWindow },
 							vardisplay = menu.f_vardisplay(c),
 							selected = false,
 						})
@@ -445,29 +435,31 @@ function menu.f_start()
 				lastNum = j
 			end
 		end
-		motif.f_loadSprData(motif[v.section], {s = 'menu_item_bg_', x = 0, y = 0})
-		motif.f_loadSprData(motif[v.section], {s = 'menu_item_active_bg_', x = 0, y = 0})
+		motif.f_loadSprData(motif[v.section], { s = "menu_item_bg_", x = 0, y = 0 })
+		motif.f_loadSprData(motif[v.section], { s = "menu_item_active_bg_", x = 0, y = 0 })
 		animSetWindow(motif[v.section].menu_item_bg_data, t_menuWindow[1], t_menuWindow[2], t_menuWindow[3] - t_menuWindow[1], t_menuWindow[4] - t_menuWindow[2])
 		animSetWindow(motif[v.section].menu_item_active_bg_data, t_menuWindow[1], t_menuWindow[2], t_menuWindow[3] - t_menuWindow[1], t_menuWindow[4] - t_menuWindow[2])
-		if main.debugLog then main.f_printTable(menu[v.id], 'debug/t_' .. v.id .. 'Menu.txt') end
+		if main.debugLog then
+			main.f_printTable(menu[v.id], "debug/t_" .. v.id .. "Menu.txt")
+		end
 		-- Move list
 		if v.movelist then
-			menu[v.section .. '_txt_title'] = main.f_createTextImg(motif[v.section], 'movelist_title', {defsc = motif.defaultMenu, x = motif[v.section].movelist_pos[1], y = motif[v.section].movelist_pos[2]})
-			menu[v.section .. '_txt_text'] = main.f_createTextImg(motif[v.section], 'movelist_text', {defsc = motif.defaultMenu, x = motif[v.section].movelist_pos[1], y = motif[v.section].movelist_pos[2]})
-			menu[v.section .. '_overlay'] = main.f_createOverlay(motif[v.section], 'overlay')
-			menu[v.section .. '_movelist_overlay'] = main.f_createOverlay(motif[v.section], 'movelist_overlay')
+			menu[v.section .. "_txt_title"] = main.f_createTextImg(motif[v.section], "movelist_title", { defsc = motif.defaultMenu, x = motif[v.section].movelist_pos[1], y = motif[v.section].movelist_pos[2] })
+			menu[v.section .. "_txt_text"] = main.f_createTextImg(motif[v.section], "movelist_text", { defsc = motif.defaultMenu, x = motif[v.section].movelist_pos[1], y = motif[v.section].movelist_pos[2] })
+			menu[v.section .. "_overlay"] = main.f_createOverlay(motif[v.section], "overlay")
+			menu[v.section .. "_movelist_overlay"] = main.f_createOverlay(motif[v.section], "movelist_overlay")
 			--menu[v.section .. '_t_movelistWindow'] = {0, 0, main.SP_Localcoord[1], main.SP_Localcoord[2]}
 			if motif[v.section].movelist_window_margins_y[1] ~= 0 or motif[v.section].movelist_window_margins_y[2] ~= 0 then
-				local data = menu[v.section .. '_txt_text']
+				local data = menu[v.section .. "_txt_text"]
 				local font_def = main.font_def[motif[v.section].movelist_text_font[1] .. motif[v.section].movelist_text_font[8]]
-				menu[v.section .. '_t_movelistWindow'] = {
+				menu[v.section .. "_t_movelistWindow"] = {
 					0,
 					math.max(0, motif[v.section].movelist_pos[2] + motif[v.section].movelist_text_offset[2] - motif[v.section].movelist_window_margins_y[1]),
 					motif[v.section].movelist_pos[1] + motif[v.section].movelist_text_offset[1] + motif[v.section].movelist_window_width,
-					motif[v.section].movelist_pos[2] + motif[v.section].movelist_text_offset[2] + (motif[v.section].movelist_window_visibleitems - 1) * main.f_round((font_def.Size[2] + font_def.Spacing[2]) * data.scaleY + motif[v.section].movelist_text_spacing[2]) + motif[v.section].movelist_window_margins_y[2] + math.max(0, motif[v.section].movelist_glyphs_offset[2])
+					motif[v.section].movelist_pos[2] + motif[v.section].movelist_text_offset[2] + (motif[v.section].movelist_window_visibleitems - 1) * main.f_round((font_def.Size[2] + font_def.Spacing[2]) * data.scaleY + motif[v.section].movelist_text_spacing[2]) + motif[v.section].movelist_window_margins_y[2] + math.max(0, motif[v.section].movelist_glyphs_offset[2]),
 				}
 			end
-			menu[v.section .. '_txt_text']:update({window = menu[v.section .. '_t_movelistWindow']})
+			menu[v.section .. "_txt_text"]:update { window = menu[v.section .. "_t_movelistWindow"] }
 		end
 	end
 end
@@ -478,18 +470,18 @@ function menu.f_trainingReset()
 	for k, _ in pairs(menu.t_valuename) do
 		menu[k] = 1
 	end
-	menu.ailevel = gameOption('Options.Difficulty')
+	menu.ailevel = gameOption("Options.Difficulty")
 	for _, v in ipairs(menu.t_vardisplayPointers) do
 		v.vardisplay = menu.f_vardisplay(v.itemname)
 	end
 	player(2)
 	setAILevel(0)
-	mapSet('_iksys_trainingDummyControl', 0)
-	mapSet('_iksys_trainingDummyMode', 0)
-	mapSet('_iksys_trainingGuardMode', 0)
-	mapSet('_iksys_trainingFallRecovery', 0)
-	mapSet('_iksys_trainingDistance', 0)
-	mapSet('_iksys_trainingButtonJam', 0)
+	mapSet("_iksys_trainingDummyControl", 0)
+	mapSet("_iksys_trainingDummyMode", 0)
+	mapSet("_iksys_trainingGuardMode", 0)
+	mapSet("_iksys_trainingFallRecovery", 0)
+	mapSet("_iksys_trainingDistance", 0)
+	mapSet("_iksys_trainingButtonJam", 0)
 end
 
 menu.movelistChar = 1
@@ -498,40 +490,40 @@ function menu.f_init()
 	togglePause(true)
 	main.pauseMenu = true
 	main.f_bgReset(motif.optionbgdef.bg)
-	if gamemode('training') then
+	if gamemode("training") then
 		sndPlay(motif.files.snd_data, motif.training_info.enter_snd[1], motif.training_info.enter_snd[2])
 		main.f_bgReset(motif.trainingbgdef.bg)
-		main.f_fadeReset('fadein', motif.training_info)
-		menu.currentMenu = {menu.training.loop, menu.training.loop}
+		main.f_fadeReset("fadein", motif.training_info)
+		menu.currentMenu = { menu.training.loop, menu.training.loop }
 	else
 		sndPlay(motif.files.snd_data, motif.menu_info.enter_snd[1], motif.menu_info.enter_snd[2])
 		main.f_bgReset(motif.menubgdef.bg)
-		main.f_fadeReset('fadein', motif.menu_info)
+		main.f_fadeReset("fadein", motif.menu_info)
 		--menu.menu.cursorPosY = 1
 		--menu.menu.moveTxt = 0
 		--menu.menu.item = 1
-		menu.currentMenu = {menu.menu.loop, menu.menu.loop}
+		menu.currentMenu = { menu.menu.loop, menu.menu.loop }
 	end
 end
 
 function menu.f_run()
-	local section = 'menu_info'
-	local bgdef = 'menubgdef'
-	if gamemode('training') then
-		section = 'training_info'
-		bgdef = 'trainingbgdef'
+	local section = "menu_info"
+	local bgdef = "menubgdef"
+	if gamemode("training") then
+		section = "training_info"
+		bgdef = "trainingbgdef"
 	end
 	--draw overlay
-	menu[section .. '_overlay']:draw()
+	menu[section .. "_overlay"]:draw()
 	--Button Config
-	if menu.itemname == 'keyboard' or menu.itemname == 'gamepad' then
-		if menu.itemname == 'keyboard' then
-			options.f_keyCfg('Keys', menu.itemname, bgdef, true)
+	if menu.itemname == "keyboard" or menu.itemname == "gamepad" then
+		if menu.itemname == "keyboard" then
+			options.f_keyCfg("Keys", menu.itemname, bgdef, true)
 		else
-			options.f_keyCfg('Joystick', menu.itemname, bgdef, true)
+			options.f_keyCfg("Joystick", menu.itemname, bgdef, true)
 		end
 	--Command List
-	elseif menu.itemname == 'commandlist' then
+	elseif menu.itemname == "commandlist" then
 		menu.f_commandlistRender(section, menu.t_movelists[menu.movelistChar])
 	--Menu
 	else
@@ -544,16 +536,16 @@ end
 --;===========================================================
 local function f_commandlistData(t, str, align, col)
 	local t_insert = {}
-	str = str .. '<#>'
-	for m1, m2 in str:gmatch('(.-)<([^%g <>]+)>') do
-		if m1 ~= '' then
-			table.insert(t_insert, {glyph = false, text = m1, align = align, col = col})
+	str = str .. "<#>"
+	for m1, m2 in str:gmatch("(.-)<([^%g <>]+)>") do
+		if m1 ~= "" then
+			table.insert(t_insert, { glyph = false, text = m1, align = align, col = col })
 		end
-		if not m2:match('^#[A-Za-z0-9]+$') and not m2:match('^/$') and not m2:match('^#$') then
-			table.insert(t_insert, {glyph = true, text = m2, align = align, col = col})
-		elseif m2:match('^#[A-Za-z0-9]+$') then
+		if not m2:match("^#[A-Za-z0-9]+$") and not m2:match("^/$") and not m2:match("^#$") then
+			table.insert(t_insert, { glyph = true, text = m2, align = align, col = col })
+		elseif m2:match("^#[A-Za-z0-9]+$") then
 			col = color:fromHex(m2)
-		elseif m2:match('^/$') then
+		elseif m2:match("^/$") then
 			col = {}
 		end
 	end
@@ -572,7 +564,7 @@ end
 function menu.f_commandlistParse()
 	menu.t_movelists = {}
 	local t_uniqueRefs = {}
-	for player, tbl in ipairs({start.p[1].t_selected, start.p[2].t_selected}) do
+	for player, tbl in ipairs { start.p[1].t_selected, start.p[2].t_selected } do
 		for member, sel in ipairs(tbl) do
 			if t_uniqueRefs[sel.ref] == nil then
 				t_uniqueRefs[sel.ref] = true
@@ -581,20 +573,20 @@ function menu.f_commandlistParse()
 				end
 				if start.f_getCharData(sel.ref).commandlist == nil then
 					local movelist = getCharMovelist(sel.ref)
-					if movelist ~= '' then
+					if movelist ~= "" then
 						for k, v in main.f_sortKeys(motif.glyphs, function(t, a, b) return string.len(a) > string.len(b) end) do
-							movelist = movelist:gsub(main.f_escapePattern(k), '<' .. numberToRune(v[1] + 0xe000) .. '>')
+							movelist = movelist:gsub(main.f_escapePattern(k), "<" .. numberToRune(v[1] + 0xe000) .. ">")
 						end
 						local t = {}
 						local col = {}
-						for line in movelist:gmatch('([^\n]*)\n?') do
-							line = line:gsub('%s+$', '')
+						for line in movelist:gmatch("([^\n]*)\n?") do
+							line = line:gsub("%s+$", "")
 							local subt = {}
-							for m in line:gmatch('(	*[^	]+)') do
+							for m in line:gmatch("(	*[^	]+)") do
 								local tabs = 0
-								m = m:gsub('^(	*)', function(m1)
+								m = m:gsub("^(	*)", function(m1)
 									tabs = string.len(m1)
-									return ''
+									return ""
 								end)
 								local align = 1 --left align
 								if tabs == 1 then
@@ -626,7 +618,9 @@ function menu.f_commandlistParse()
 	if menu.movelistChar > #menu.t_movelists then
 		menu.movelistChar = 1
 	end
-	if main.debugLog then main.f_printTable(menu.t_movelists, "debug/t_movelists.txt") end
+	if main.debugLog then
+		main.f_printTable(menu.t_movelists, "debug/t_movelists.txt")
+	end
 end
 
 function menu.f_commandlistRender(section, t)
@@ -635,43 +629,43 @@ function menu.f_commandlistRender(section, t)
 	if t.commandlist ~= nil then
 		cmdList = t.commandlist
 	else
-		table.insert(cmdList, {{glyph = false, text = motif[section].movelist_text_text, align = 1, col = {}}})
+		table.insert(cmdList, { { glyph = false, text = motif[section].movelist_text_text, align = 1, col = {} } })
 	end
-	if esc() or main.f_input(main.t_players, {'m'}) then
+	if esc() or main.f_input(main.t_players, { "m" }) then
 		sndPlay(motif.files.snd_data, motif[section].cancel_snd[1], motif[section].cancel_snd[2])
-		menu.itemname = ''
+		menu.itemname = ""
 		return
-	elseif main.f_input(main.t_players, {'pal', 's'}) then
+	elseif main.f_input(main.t_players, { "pal", "s" }) then
 		sndPlay(motif.files.snd_data, motif[section].cursor_done_snd[1], motif[section].cursor_done_snd[2])
-		menu.itemname = ''
+		menu.itemname = ""
 		togglePause(false)
 		main.pauseMenu = false
 		menu.currentMenu[1] = menu.currentMenu[2]
 		return
-	elseif main.f_input(main.t_players, {'$B'}) and #menu.t_movelists > 1 then
+	elseif main.f_input(main.t_players, { "$B" }) and #menu.t_movelists > 1 then
 		sndPlay(motif.files.snd_data, motif[section].cursor_move_snd[1], motif[section].cursor_move_snd[2])
 		menu.movelistChar = menu.movelistChar - 1
 		if menu.movelistChar < 1 then
 			menu.movelistChar = #menu.t_movelists
 		end
-	elseif main.f_input(main.t_players, {'$F'}) and #menu.t_movelists > 1 then
+	elseif main.f_input(main.t_players, { "$F" }) and #menu.t_movelists > 1 then
 		sndPlay(motif.files.snd_data, motif[section].cursor_move_snd[1], motif[section].cursor_move_snd[2])
 		menu.movelistChar = menu.movelistChar + 1
 		if menu.movelistChar > #menu.t_movelists then
 			menu.movelistChar = 1
 		end
-	elseif main.f_input(main.t_players, {'$U'}) and t.tbl.movelistLine > 1 then
+	elseif main.f_input(main.t_players, { "$U" }) and t.tbl.movelistLine > 1 then
 		sndPlay(motif.files.snd_data, motif[section].cursor_move_snd[1], motif[section].cursor_move_snd[2])
 		t.tbl.movelistLine = t.tbl.movelistLine - 1
-	elseif main.f_input(main.t_players, {'$D'}) and t.tbl.movelistLine <= #cmdList - motif[section].movelist_window_visibleitems then
+	elseif main.f_input(main.t_players, { "$D" }) and t.tbl.movelistLine <= #cmdList - motif[section].movelist_window_visibleitems then
 		sndPlay(motif.files.snd_data, motif[section].cursor_move_snd[1], motif[section].cursor_move_snd[2])
 		t.tbl.movelistLine = t.tbl.movelistLine + 1
 	end
 	--draw overlay
-	menu[section .. '_movelist_overlay']:draw()
+	menu[section .. "_movelist_overlay"]:draw()
 	--draw title
-	menu[section .. '_txt_title']:update({text = main.f_itemnameUpper(motif[section].movelist_title_text:gsub('%%s', t.name), motif[section].movelist_title_uppercase == 1)})
-	menu[section .. '_txt_title']:draw()
+	menu[section .. "_txt_title"]:update { text = main.f_itemnameUpper(motif[section].movelist_title_text:gsub("%%s", t.name), motif[section].movelist_title_uppercase == 1) }
+	menu[section .. "_txt_title"]:draw()
 	--draw commands
 	local i = 0
 	for n = t.tbl.movelistLine, math.min(t.tbl.movelistLine + motif[section].movelist_window_visibleitems + 1, #cmdList) do
@@ -681,7 +675,7 @@ function menu.f_commandlistRender(section, t)
 		local align = 1
 		local width = 0
 		for k, v in ipairs(cmdList[n]) do
-			if v.text ~= '' then
+			if v.text ~= "" then
 				alignOffset = 0
 				if v.align == 0 then --center align
 					alignOffset = motif[section].movelist_window_width * 0.5
@@ -692,7 +686,7 @@ function menu.f_commandlistRender(section, t)
 					lengthOffset = 0
 					align = v.align
 				end
-				local data = menu[section .. '_txt_text']
+				local data = menu[section .. "_txt_text"]
 				local font_def = main.font_def[motif[section].movelist_text_font[1] .. motif[section].movelist_text_font[8]]
 				--render glyph
 				if v.glyph and motif.glyphs_data[v.text] ~= nil then
@@ -702,30 +696,24 @@ function menu.f_commandlistRender(section, t)
 						if v.align == -1 then
 							alignOffset = alignOffset - motif.glyphs_data[v.text].info.Size[1] * scaleX
 						end
-						if motif.defaultMenu then disableLuaScale() end
+						if motif.defaultMenu then
+							disableLuaScale()
+						end
 						animSetScale(motif.glyphs_data[v.text].anim, scaleX, scaleY)
-						animSetPos(
-							motif.glyphs_data[v.text].anim,
-							math.floor(motif[section].movelist_pos[1] + motif[section].movelist_text_offset[1] + motif[section].movelist_glyphs_offset[1] + alignOffset + lengthOffset),
-							motif[section].movelist_pos[2] + motif[section].movelist_text_offset[2] + motif[section].movelist_glyphs_offset[2] + main.f_round((font_def.Size[2] + font_def.Spacing[2]) * data.scaleY + motif[section].movelist_text_spacing[2]) * (i - 1)
-						)
-						animSetWindow(
-							motif.glyphs_data[v.text].anim,
-							menu[section .. '_t_movelistWindow'][1],
-							menu[section .. '_t_movelistWindow'][2],
-							menu[section .. '_t_movelistWindow'][3] - menu[section .. '_t_movelistWindow'][1],
-							menu[section .. '_t_movelistWindow'][4] - menu[section .. '_t_movelistWindow'][2]
-						)
+						animSetPos(motif.glyphs_data[v.text].anim, math.floor(motif[section].movelist_pos[1] + motif[section].movelist_text_offset[1] + motif[section].movelist_glyphs_offset[1] + alignOffset + lengthOffset), motif[section].movelist_pos[2] + motif[section].movelist_text_offset[2] + motif[section].movelist_glyphs_offset[2] + main.f_round((font_def.Size[2] + font_def.Spacing[2]) * data.scaleY + motif[section].movelist_text_spacing[2]) * (i - 1))
+						animSetWindow(motif.glyphs_data[v.text].anim, menu[section .. "_t_movelistWindow"][1], menu[section .. "_t_movelistWindow"][2], menu[section .. "_t_movelistWindow"][3] - menu[section .. "_t_movelistWindow"][1], menu[section .. "_t_movelistWindow"][4] - menu[section .. "_t_movelistWindow"][2])
 						--animUpdate(motif.glyphs_data[v.text].anim)
 						animDraw(motif.glyphs_data[v.text].anim)
-						if motif.defaultMenu then setLuaScale() end
+						if motif.defaultMenu then
+							setLuaScale()
+						end
 						if k < #cmdList[n] then
 							width = motif.glyphs_data[v.text].info.Size[1] * scaleX + motif[section].movelist_glyphs_spacing[1]
 						end
 					end
 				--render text
 				else
-					data:update({
+					data:update {
 						text = v.text,
 						align = v.align,
 						x = math.floor(motif[section].movelist_pos[1] + motif[section].movelist_text_offset[1] + alignOffset + lengthOffset),
@@ -734,7 +722,7 @@ function menu.f_commandlistRender(section, t)
 						g = v.col.g or motif[section].movelist_text_font[5],
 						b = v.col.b or motif[section].movelist_text_font[6],
 						a = v.col.a or motif[section].movelist_text_font[7],
-					})
+					}
 					data:draw()
 					if k < #cmdList[n] then
 						width = fontGetTextWidth(main.font[data.font .. data.height], v.text, data.bank) * motif[section].movelist_text_scale[1] + motif[section].movelist_text_spacing[1]

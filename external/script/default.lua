@@ -1,5 +1,5 @@
 if not main.makeRoster then
-	launchFight{}
+	launchFight {}
 	setMatchNo(-1)
 	return
 end
@@ -17,7 +17,9 @@ for i = matchno(), #start.t_roster do
 		table.insert(t_p2char, start.f_getCharData(v).char)
 	end
 	main.f_tableShuffle(t_p2char)
-	if not launchFight{p2char = t_p2char, p2numchars = #t_p2char} then return end
+	if not launchFight { p2char = t_p2char, p2numchars = #t_p2char } then
+		return
+	end
 end
 
 if main.storyboard.ending then
