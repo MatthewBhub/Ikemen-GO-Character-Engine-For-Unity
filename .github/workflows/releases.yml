@@ -1,6 +1,8 @@
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - develop
+      - ci_test
   workflow_dispatch:
     inputs:
       tag:
@@ -69,22 +71,22 @@ jobs:
     strategy:
       matrix:
         cfg:
-          - runner_os: windows
-            os: windows-2022
-            goos: windows
-            goarch: amd64
-            bin: Ikemen_GO.exe
-            glibc: ''
-            target: ''
-            build_target: Win64
-          - runner_os: linux
-            os: ubuntu-22.04
-            goos: linux
-            goarch: amd64
-            bin: Ikemen_GO_Linux
-            glibc: '2.13'
-            target: ''
-            build_target: Linux
+#          - runner_os: windows
+#            os: windows-2022
+#            goos: windows
+#            goarch: amd64
+#            bin: Ikemen_GO.exe
+#            glibc: ''
+#            target: ''
+#            build_target: Win64
+#          - runner_os: linux
+#            os: ubuntu-22.04
+#            goos: linux
+#            goarch: amd64
+#            bin: Ikemen_GO_Linux
+#            glibc: '2.13'
+#            target: ''
+#            build_target: Linux
           - runner_os: macos
             os: macos-14 # macos-13
             goos: darwin
@@ -96,6 +98,13 @@ jobs:
     runs-on: ${{ matrix.cfg.os }}
     steps:
       - uses: actions/checkout@v6
+
+      - name: List broken symlinks (macOS)
+        if: ${{ runner.os == 'macOS' }}
+        run: |
+          echo "Broken symlinks under workspace:"
+          # -L makes find follow symlinks; -xtype l reports broken ones
+          find . -xtype l -print || true
 
       - name: Setup Golang with cache
         uses: magnetikonline/action-golang-cache@v5
