@@ -151,7 +151,7 @@ options.t_itemname = {
 			modifyGameOption('Options.Team.PowerShare', true)
 			modifyGameOption('Options.Team.SingleVsTeamLife', 100)
 			modifyGameOption('Options.Simul.Min', 2)
-			modifyGameOption('Options.Simul.Max', 4)
+			modifyGameOption('Options.Simul.Max', 100)
 			modifyGameOption('Options.Simul.Match.Wins', 2)
 			modifyGameOption('Options.Simul.LoseOnKO', true)
 			modifyGameOption('Options.Tag.Min', 2)
@@ -656,7 +656,7 @@ options.t_itemname = {
 	end,
 	--Max Simul Chars
 	['maxsimul'] = function(t, item, cursorPosY, moveTxt)
-		if main.f_input(main.t_players, {'$F'}) and gameOption('Options.Simul.Max') < 4 then
+		if main.f_input(main.t_players, {'$F'}) and gameOption('Options.Simul.Max') < 100 then
 			sndPlay(motif.files.snd_data, motif.option_info.cursor_move_snd[1], motif.option_info.cursor_move_snd[2])
 			modifyGameOption('Options.Simul.Max', gameOption('Options.Simul.Max') + 1)
 			t.items[item].vardisplay = gameOption('Options.Simul.Max')

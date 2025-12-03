@@ -25,7 +25,7 @@ import (
 )
 
 const (
-	MaxSimul        = 4
+	MaxSimul        = 100
 	MaxAttachedChar = 4
 	MaxPlayerNo     = MaxSimul*2 + MaxAttachedChar
 )
@@ -272,6 +272,7 @@ type System struct {
 	motifDir          string
 	motifDef          string
 	lifebarDef        string
+	sandboxMode       bool
 	captureNum        int
 	decisiveRound     [2]bool
 	timerStart        int32
@@ -484,6 +485,21 @@ func (s *System) init(w, h int32) *lua.LState {
 		}
 	}()
 	return l
+}
+
+// Initialize sandbox mode: pre-populate MaxSimul characters per team, skip UI, disable lifebar/rounds
+func (s *System) initSandbox() {
+	s.sandboxMode = true
+	// Pre-set team modes and numSimul
+	for i := 0; i < 2; i++ {
+		s.tmode[i] = TM_Simul
+		s.numSimul[i] = int32(MaxSimul)
+		// Pre-populate select list with dummy entries so loader can accept any slot
+		for j := 0; j < MaxSimul; j++ {
+			s.sel.selected[i] = append(s.sel.selected[i], [2]int{0, 1}) // charIdx=0, palette=1
+			s.sel.ocd[i] = append(s.sel.ocd[i], *newOverrideCharData())
+		}
+	}
 }
 
 func (s *System) shutdown() {
@@ -1671,6 +1687,161 @@ func (s *System) clearPlayerAssets(pn int, forceDestroy bool) {
 	}
 	s.projs[pn] = s.projs[pn][:0]
 	s.explods[pn] = s.explods[pn][:0]
+}
+
+// Integrate a newly-loaded character at runtime into engine runtime lists.
+// This performs the minimal steps required so the character is processed
+// by the main loop immediately: assign IDs, load palettes, ensure command
+// lists and replace/add to the runOrder.
+func (s *System) integrateLoadedChar(pn int) error {
+	if pn < 0 || pn >= len(s.chars) {
+		return fmt.Errorf("invalid player number: %d", pn)
+	}
+	if len(s.chars[pn]) == 0 || s.chars[pn][0] == nil {
+		return fmt.Errorf("no character in slot: %d", pn)
+	}
+	c := s.chars[pn][0]
+
+	// Assign player IDs similar to initPlayerID but keep it lightweight
+	s.initPlayerID()
+
+	// For mid-match spawning: if character still has an unassigned ID (-1),
+	// explicitly give it a new valid ID. This is necessary because initPlayerID
+	// only assigns IDs to characters with roundsExisted() == 0, which fails for
+	// mid-match spawns where the team's roundsExisted is already > 0
+	if c.id == -1 {
+		c.id = s.newCharId()
+	}
+
+	// Initialize CNS variables if this character hasn't existed before
+	// Ensure CNS variable maps exist. If this is a fresh character, init them;
+	// otherwise defensively create any nil maps to avoid panics from script
+	// bytecode that sets vars/fvars/sysvars.
+	if !c.ocd().existed {
+		c.initCnsVar()
+		c.ocd().existed = true
+	} else {
+		if c.cnsvar == nil {
+			c.cnsvar = make(map[int32]int32)
+		}
+		if c.cnsfvar == nil {
+			c.cnsfvar = make(map[int32]float32)
+		}
+		if c.cnssysvar == nil {
+			c.cnssysvar = make(map[int32]int32)
+		}
+		if c.cnssysfvar == nil {
+			c.cnssysfvar = make(map[int32]float32)
+		}
+	}
+
+	// Load palette immediately if needed
+	if c.roundsExisted() == 0 {
+		c.loadPalette()
+	}
+
+	// Ensure character mapArray/remap/dialogue are initialized so
+	// mid-match integration doesn't leave nil maps that scripts modify.
+	if c.mapArray == nil {
+		c.mapArray = make(map[string]float32, len(c.mapDefault))
+	}
+	for k, v := range c.mapDefault {
+		// Do not overwrite existing entries if they were already set
+		if _, ok := c.mapArray[k]; !ok {
+			c.mapArray[k] = v
+		}
+	}
+	if c.remapSpr == nil {
+		c.remapSpr = make(RemapPreset)
+	}
+	if c.dialogue == nil {
+		c.dialogue = []string{}
+	}
+
+	// Ensure command buffers are sized to current player count
+	for _, p := range s.chars {
+		if len(p) > 0 && p[0].cmd == nil {
+			p[0].cmd = make([]CommandList, len(s.chars))
+		} else if len(p) > 0 && len(p[0].cmd) != len(s.chars) {
+			newCmd := make([]CommandList, len(s.chars))
+			copy(newCmd, p[0].cmd)
+			p[0].cmd = newCmd
+		}
+	}
+
+	// Ensure this character has a command slice sized correctly
+	if c.cmd == nil || len(c.cmd) != len(s.chars) {
+		c.cmd = make([]CommandList, len(s.chars))
+	}
+
+	// Copy initial command lists into other players' tables where sensible
+	for j, pj := range s.chars {
+		if j == pn || len(pj) == 0 {
+			continue
+		}
+		if pj[0].cmd == nil {
+			pj[0].cmd = make([]CommandList, len(s.chars))
+		}
+		// Copy p's command lists into remote slot so scripts referencing inputs won't nil-ref
+		pj[0].cmd[pn].CopyList(c.cmd[pn])
+	}
+
+	// Set controller: ensure player is controllable by default
+	c.controller = pn
+	if s.aiLevel[pn] != 0 {
+		c.controller ^= -1
+	}
+
+	// Reset character state for mid-match integration (similar to resetRoundState for a single char)
+	// This ensures life, state, and control flags are properly initialized.
+	s.clearPlayerAssets(pn, false)
+	c.posReset()
+	c.setCtrl(false)
+	c.clearState()
+	c.prepareNextRound()
+	// CRITICAL: Manually set life to lifeMax for mid-match spawning
+	// (prepareNextRound() does not set life; that's done in loadFightValues which only runs at match start)
+	c.life = c.lifeMax
+	c.redLife = c.lifeMax
+	// Set power based on config
+	if s.maxPowerMode {
+		c.power = c.powerMax
+	} else {
+		c.power = 0
+	}
+	c.power = Clamp(c.power, 0, c.powerMax)
+	c.varRangeSet(0, s.cgi[pn].data.intpersistindex-1, 0)
+	c.fvarRangeSet(0, s.cgi[pn].data.floatpersistindex-1, 0)
+	for j := range c.cmd {
+		c.cmd[j].BufReset()
+	}
+	// Load palette and reset remap
+	if s.roundsExisted[pn&1] == 0 {
+		s.cgi[pn].palettedata.palList.ResetRemap()
+		if s.cgi[pn].sff.header.Ver0 == 1 {
+			c.remapPal(c.getPalfx(),
+				[...]int32{1, 1}, [...]int32{1, s.cgi[pn].palno})
+		}
+	}
+	s.cgi[pn].clearPCTime()
+
+	// Place character in intro state (state 5900) like a normal round start
+	firstAnim := int32(0)
+	if c.gi().animTable[0] == nil {
+		for k := range c.gi().animTable {
+			firstAnim = k
+			break
+		}
+	}
+	c.selfState(5900, firstAnim, -1, 0, "")
+
+	// Replace or add into charList run order so it is processed immediately
+	if !s.charList.replace(c, pn, 0) {
+		s.charList.add(c)
+	}
+
+	s.appendToConsole(fmt.Sprintf("Integrated character into slot %d (id=%d)", pn, c.id))
+	return nil
 }
 
 func (s *System) resetRoundState() {

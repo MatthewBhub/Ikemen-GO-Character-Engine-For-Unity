@@ -3988,16 +3988,30 @@ func (b StateBlock) Run(c *Char, ps []int32) (changeState bool) {
 		*/
 	}
 	if b.persistentIndex >= 0 {
-		if ps[b.persistentIndex] != math.MaxInt32 {
-			ps[b.persistentIndex]--
-		}
-		if ps[b.persistentIndex] > 0 {
-			return false
+		pi := int(b.persistentIndex)
+		if pi < len(ps) {
+			if ps[pi] != math.MaxInt32 {
+				ps[pi]--
+			}
+			if ps[pi] > 0 {
+				return false
+			}
+		} else {
+			// Defensive: persistent index references missing counter array entry.
+			// This can happen during dynamic mid-match character swap; skip persistent handling.
+			sys.printBytecodeError(fmt.Sprintf("persistentIndex %d out of range (len ps=%d); skipping persistent logic", pi, len(ps)))
 		}
 	}
 	// https://github.com/ikemen-engine/Ikemen-GO/issues/963
+	// Prefer the state-owner's root char as workingChar when available.
+	// Fall back to the current char if the owner slot is empty to avoid panics
+	// during dynamic mid-match spawn/remove operations.
 	//sys.workingChar = c
-	sys.workingChar = sys.chars[c.ss.sb.playerNo][0]
+	if c.ss.sb.playerNo >= 0 && c.ss.sb.playerNo < len(sys.chars) && len(sys.chars[c.ss.sb.playerNo]) > 0 {
+		sys.workingChar = sys.chars[c.ss.sb.playerNo][0]
+	} else {
+		sys.workingChar = c
+	}
 	if b.loopBlock {
 		if b.forLoop {
 			if b.forAssign {
@@ -4095,7 +4109,12 @@ func (b StateBlock) Run(c *Char, ps []int32) (changeState bool) {
 		}
 	}
 	if b.persistentIndex >= 0 {
-		ps[b.persistentIndex] = b.persistent
+		pi := int(b.persistentIndex)
+		if pi < len(ps) {
+			ps[pi] = b.persistent
+		} else {
+			sys.printBytecodeError(fmt.Sprintf("persistentIndex %d out of range on restore (len ps=%d); skipping", pi, len(ps)))
+		}
 	}
 	return false
 }

@@ -477,54 +477,78 @@ func readHealthBar(pre string, is IniSection, sff *Sff, at AnimationTable, f []*
 }
 
 func (hb *HealthBar) step(ref int, hbr *HealthBar) {
-	refChar := sys.chars[ref][0]
-	var life float32 = float32(refChar.life) / float32(refChar.lifeMax)
-	var redVal int32 = refChar.redLife - refChar.life
-	var getHit bool = (refChar.receivedHits != 0 || refChar.ss.moveType == MT_H) && !refChar.scf(SCF_over_ko)
-
-	if hbr.toplife > life {
-		hbr.toplife += (life - hbr.toplife) / 2
-	} else {
-		hbr.toplife = life
+	// [FIX START] Check for missing character: prevents "index out of range [0] with length 0" crash.
+	var refChar *Char = nil
+	if len(sys.chars[ref]) > 0 {
+		refChar = sys.chars[ref][0] // Safely assign the character object
 	}
 
-	// Element shifting gradient
+	// Default to full health (1.0) and no hit, as requested.
+	var life float32 = 1.0
+	var redVal int32 = 0
+	var getHit bool = false
+
+	if refChar != nil {
+		// --- ORIGINAL LOGIC (Character Present) ---
+		life = float32(refChar.life) / float32(refChar.lifeMax)
+		redVal = refChar.redLife - refChar.life
+		getHit = (refChar.receivedHits != 0 || refChar.ss.moveType == MT_H) && !refChar.scf(SCF_over_ko)
+
+		if hbr.toplife > life {
+			hbr.toplife += (life - hbr.toplife) / 2
+		} else {
+			hbr.toplife = life
+		}
+	} else {
+		// --- MODIFIED LOGIC (Character Missing) ---
+		// Reset all life trackers to 1.0 (full life) to prevent graphical inconsistencies.
+		hbr.toplife = life
+		hbr.midlife = life
+		hbr.midlifeMin = life
+		hbr.oldlife = life
+	}
+	// [FIX END]
+
+	// Element shifting gradient (uses the calculated/default 'life' variable)
 	hb.shift.anim.srcAlpha = int16(255 * (1 - life))
 	hb.shift.anim.dstAlpha = int16(255 * life)
 
-	if !hb.mid_freeze && getHit && !hb.gethit && len(hb.mid.anim.frames) > 0 {
-		hbr.mlifetime = hb.mid_delay
-		hbr.midlife = hbr.oldlife
-		hbr.midlifeMin = hbr.oldlife
-	}
-	hb.gethit = getHit
-	if hb.mid_freeze && getHit && len(hb.mid.anim.frames) > 0 {
-		if hbr.mlifetime < hb.mid_delay {
+	// Mid-life update (Only run the complex logic if the character exists)
+	if refChar != nil {
+		if !hb.mid_freeze && getHit && !hb.gethit && len(hb.mid.anim.frames) > 0 {
 			hbr.mlifetime = hb.mid_delay
 			hbr.midlife = hbr.oldlife
 			hbr.midlifeMin = hbr.oldlife
 		}
-	} else {
-		if hbr.mlifetime > 0 {
-			hbr.mlifetime--
-		}
-		if len(hb.mid.anim.frames) > 0 && hbr.mlifetime <= 0 && life < hbr.midlifeMin {
-			hbr.midlifeMin += (life - hbr.midlifeMin) * (1 / (12 - (life-hbr.midlifeMin)*144)) * hb.mid_mult
-			if hbr.midlifeMin < life {
-				hbr.midlifeMin = life
+		hb.gethit = getHit
+		if hb.mid_freeze && getHit && len(hb.mid.anim.frames) > 0 {
+			if hbr.mlifetime < hb.mid_delay {
+				hbr.mlifetime = hb.mid_delay
+				hbr.midlife = hbr.oldlife
+				hbr.midlifeMin = hbr.oldlife
 			}
 		} else {
-			hbr.midlifeMin = life
+			if hbr.mlifetime > 0 {
+				hbr.mlifetime--
+			}
+			if len(hb.mid.anim.frames) > 0 && hbr.mlifetime <= 0 && life < hbr.midlifeMin {
+				hbr.midlifeMin += (life - hbr.midlifeMin) * (1 / (12 - (life-hbr.midlifeMin)*144)) * hb.mid_mult
+				if hbr.midlifeMin < life {
+					hbr.midlifeMin = life
+				}
+			} else {
+				hbr.midlifeMin = life
+			}
+			if (len(hb.mid.anim.frames) == 0 || hbr.mlifetime <= 0) && hbr.midlife > hbr.midlifeMin {
+				hbr.midlife += (hbr.midlifeMin - hbr.midlife) / hb.mid_steps
+			}
+			hbr.oldlife = life
 		}
-		if (len(hb.mid.anim.frames) == 0 || hbr.mlifetime <= 0) && hbr.midlife > hbr.midlifeMin {
-			hbr.midlife += (hbr.midlifeMin - hbr.midlife) / hb.mid_steps
-		}
-		hbr.oldlife = life
-	}
 
-	mlmin := MaxF(hbr.midlifeMin, life)
-	if hbr.midlife < mlmin {
-		hbr.midlife += (mlmin - hbr.midlife) / 2
+		mlmin := MaxF(hbr.midlifeMin, life)
+		if hbr.midlife < mlmin {
+			hbr.midlife += (mlmin - hbr.midlife) / 2
+		}
 	}
 
 	hb.bg0.Action()
@@ -533,7 +557,7 @@ func (hb *HealthBar) step(ref int, hbr *HealthBar) {
 	hb.top.Action()
 	hb.mid.Action()
 	// Multiple front elements - red life
-	if refChar.redLifeEnabled() {
+	if refChar != nil && refChar.redLifeEnabled() {
 		var rv int32
 		for k := range hb.red {
 			if k > rv && redVal >= k {
@@ -550,6 +574,14 @@ func (hb *HealthBar) step(ref int, hbr *HealthBar) {
 			}
 		}
 		hb.red_value[rv2].step()
+	} else if refChar == nil && len(hb.red) > 0 {
+		// Character removed, still trigger the default red bar animation (index 0)
+		if _, ok := hb.red[0]; ok {
+			hb.red[0].Action()
+		}
+		if _, ok := hb.red_value[0]; ok {
+			hb.red_value[0].step()
+		}
 	}
 
 	// Multiple front elements - life
@@ -603,11 +635,33 @@ func (hb *HealthBar) bgDraw(layerno int16) {
 }
 
 func (hb *HealthBar) draw(layerno int16, ref int, hbr *HealthBar, f []*Fnt) {
-	// Get reference values
-	refChar := sys.chars[ref][0]
-	life := float32(refChar.life) / float32(refChar.lifeMax)
-	redlife := float32(refChar.redLife) / float32(refChar.lifeMax)
-	redval := refChar.redLife - refChar.life
+	// [FIX START] Check for missing character: prevents "index out of range [0] with length 0" crash.
+	var refChar *Char = nil
+	if len(sys.chars[ref]) > 0 {
+		refChar = sys.chars[ref][0]
+	}
+
+	// Default to full health (1.0) and 1000 life if the character is missing.
+	var life float32 = hbr.toplife
+	var redlife float32 = 1.0
+	var redval int32 = 0
+	var lifeValue int32 = 1000    // Default max life for %d replacement in main life value
+	var redLifeValue int32 = 1000 // Default max life for %d replacement in red life value
+
+	if refChar != nil {
+		// --- ORIGINAL LOGIC (Character Present) ---
+		life = float32(refChar.life) / float32(refChar.lifeMax)
+		redlife = float32(refChar.redLife) / float32(refChar.lifeMax)
+		redval = refChar.redLife - refChar.life
+		lifeValue = refChar.life
+		redLifeValue = refChar.redLife
+	} else {
+		// --- MODIFIED LOGIC (Character Missing) ---
+		// Set life to 1.0 for bar drawing/clipping, matching the assumption in `step`.
+		life = 1.0
+		// hbr.midlife will also be 1.0 from the step function.
+	}
+	// [FIX END]
 
 	var MidPosX = (float32(sys.gameWidth-320) / 2)
 	var MidPosY = (float32(sys.gameHeight-240) / 2)
@@ -664,7 +718,7 @@ func (hb *HealthBar) draw(layerno int16, ref int, hbr *HealthBar, f []*Fnt) {
 	}
 
 	// Draw red life
-	if refChar.redLifeEnabled() {
+	if refChar != nil && refChar.redLifeEnabled() { // [MODIFIED] Check refChar
 		var rv int32
 		for k := range hb.red {
 			if k > rv && redval >= k {
@@ -682,7 +736,8 @@ func (hb *HealthBar) draw(layerno int16, ref int, hbr *HealthBar, f []*Fnt) {
 					rv2 = k
 				}
 			}
-			text := strings.Replace(hb.red_value[rv2].text, "%d", fmt.Sprintf("%v", refChar.redLife), 1)
+			// [MODIFIED] Use redLifeValue instead of refChar.redLife
+			text := strings.Replace(hb.red_value[rv2].text, "%d", fmt.Sprintf("%v", redLifeValue), 1)
 			text = strings.Replace(text, "%p", fmt.Sprintf("%v", math.Round(float64(redlife)*100)), 1)
 			hb.red_value[rv2].lay.DrawText(
 				float32(hb.pos[0])+sys.lifebarOffsetX,
@@ -727,7 +782,8 @@ func (hb *HealthBar) draw(layerno int16, ref int, hbr *HealthBar, f []*Fnt) {
 				fv2 = k
 			}
 		}
-		text := strings.Replace(hb.value[fv2].text, "%d", fmt.Sprintf("%v", refChar.life), 1)
+		// [MODIFIED] Use lifeValue instead of refChar.life
+		text := strings.Replace(hb.value[fv2].text, "%d", fmt.Sprintf("%v", lifeValue), 1)
 		text = strings.Replace(text, "%p", fmt.Sprintf("%v", math.Round(float64(life)*100)), 1)
 		hb.value[fv2].lay.DrawText(
 			float32(hb.pos[0])+sys.lifebarOffsetX,
@@ -748,7 +804,6 @@ func (hb *HealthBar) draw(layerno int16, ref int, hbr *HealthBar, f []*Fnt) {
 		hb.warn.Draw(float32(hb.pos[0])+sys.lifebarOffsetX, float32(hb.pos[1])+sys.lifebarOffsetY, layerno, sys.lifebarScale)
 	}
 }
-
 type PowerBar struct {
 	pos              [2]int32
 	range_x          [2]int32
@@ -4880,6 +4935,10 @@ func (l *Lifebar) step() {
 	for ti, tm := range sys.tmode {
 		if tm == TM_Tag {
 			for i, v := range l.order[ti] {
+				// Defensive: skip if referenced player slot isn't populated yet
+				if v < 0 || v >= len(sys.chars) || len(sys.chars[v]) == 0 || sys.chars[v][0] == nil {
+					continue
+				}
 				if sys.teamLeader[sys.chars[v][0].teamside] == sys.chars[v][0].playerNo && sys.chars[v][0].alive() {
 					if i != 0 {
 						if i == len(l.order[ti])-1 {
@@ -4887,7 +4946,8 @@ func (l *Lifebar) step() {
 						} else {
 							last := len(l.order[ti]) - 1
 							for n := last; n > 0; n-- {
-								if !sys.chars[l.order[ti][n]][0].alive() {
+								rv := l.order[ti][n]
+								if rv < 0 || rv >= len(sys.chars) || len(sys.chars[rv]) == 0 || sys.chars[rv][0] == nil || !sys.chars[rv][0].alive() {
 									last -= 1
 								}
 							}
@@ -4901,6 +4961,10 @@ func (l *Lifebar) step() {
 	}
 	for ti := range sys.tmode {
 		for i, v := range l.order[ti] {
+			// Defensive: skip if referenced player slot isn't populated yet
+			if v < 0 || v >= len(sys.chars) || len(sys.chars[v]) == 0 || sys.chars[v][0] == nil {
+				continue
+			}
 			// HealthBar
 			l.hb[l.ref[ti]][i*2+ti].step(v, l.hb[l.ref[ti]][v])
 			// PowerBar

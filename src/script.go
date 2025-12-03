@@ -231,6 +231,126 @@ func systemScriptInit(l *lua.LState) {
 		}
 		return 0
 	})
+	// spawnChar: spawn or reload a character into the specified player slot
+	// spawnChar(playerNumber, defPath, attached)
+	// Returns the new character's player ID on success, or false on failure
+	luaRegister(l, "spawnChar", func(l *lua.LState) int {
+		pn := int(numArg(l, 1))
+		if pn < 0 || pn >= len(sys.chars) {
+			l.RaiseError("Invalid player number: %v", pn)
+		}
+		def := strArg(l, 2)
+		attached := false
+		if !nilArg(l, 3) {
+			attached = boolArg(l, 3)
+		}
+		// Try to resolve filename similarly to other loaders
+		file := SearchFile(def, []string{"chars/", sys.motifDir, ""})
+		if file != "" {
+			def = file
+		}
+
+		// For mid-match spawning: ensure numSimul and team mode allow the target slot
+		if !attached && pn < MaxSimul*2 {
+			memberNo := pn >> 1
+			team := pn & 1
+			// Auto-increase numSimul if needed to accommodate this slot
+			if int32(memberNo+1) > sys.numSimul[team] {
+				sys.numSimul[team] = int32(memberNo + 1)
+			}
+			// Force Simul mode to allow multiple characters per team
+			if sys.tmode[team] != TM_Simul && sys.tmode[team] != TM_Tag {
+				sys.tmode[team] = TM_Simul
+			}
+
+			// Ensure the select list has entries for this memberNo so the loader
+			// can resolve a selectNo and palette. Append dummy selections if needed.
+			nsel := len(sys.sel.selected[team])
+			if memberNo >= nsel {
+				for k := nsel; k <= memberNo; k++ {
+					// [charIndex, palette]
+					sys.sel.selected[team] = append(sys.sel.selected[team], [2]int{0, 1})
+					// Append a default OverrideCharData entry so ocd indices align
+					sys.sel.ocd[team] = append(sys.sel.ocd[team], *newOverrideCharData())
+				}
+			}
+		}
+
+		// Try immediate mid-match load & integration. If the loader fails or
+		// integration errors, fall back to queued reload approach.
+		sys.sel.cdefOverwrite[pn] = def
+		ret := sys.loader.loadCharacter(pn, attached)
+		if ret < 0 || len(sys.chars[pn]) == 0 {
+			// Queue for reload if immediate load failed
+			sys.reloadCharSlot[pn] = true
+			sys.reloadFlg = true
+			sys.appendToConsole(fmt.Sprintf("Failed immediate load; queued spawn of %v into slot %v", def, pn))
+			l.Push(lua.LBool(false))
+			return 1
+		}
+		if err := sys.integrateLoadedChar(pn); err != nil {
+			// Fallback: queue reload
+			sys.reloadCharSlot[pn] = true
+			sys.reloadFlg = true
+			sys.appendToConsole(fmt.Sprintf("Integrated load failed: %v; queued spawn of %v into slot %v", err, def, pn))
+			l.Push(lua.LBool(false))
+			return 1
+		}
+		l.Push(lua.LNumber(sys.chars[pn][0].id))
+		return 1
+	})
+
+	// removeChar: clear/destroy the character at the specified player slot
+	// removeChar(playerNumber) -> true on success
+	luaRegister(l, "removeChar", func(l *lua.LState) int {
+		pn := int(numArg(l, 1))
+		if pn < 0 || pn >= len(sys.chars) {
+			l.RaiseError("Invalid player number: %v", pn)
+		}
+		// Clear projectiles/helpers and force destroy
+		sys.clearPlayerAssets(pn, true)
+		if len(sys.chars[pn]) > 0 {
+			root := sys.chars[pn][0]
+			root.setCSF(CSF_destroy)
+		}
+		// Attempt immediate removal: clear assets, remove from runOrder and
+		// mark as destroyed while keeping a placeholder root to avoid index panics.
+		sys.sel.cdefOverwrite[pn] = ""
+		if len(sys.chars[pn]) > 0 {
+			root := sys.chars[pn][0]
+			// Remove from runOrder and id map so it will no longer be processed
+			sys.charList.delete(root)
+			// Clear helpers/children and assets
+			root.children = root.children[:0]
+			root.targets = root.targets[:0]
+			root.soundChannels.SetSize(0)
+			// Mark destroyed and zero out resources to keep other subsystems safe
+			root.setCSF(CSF_destroy)
+			root.life = 0
+			root.lifeMax = 1
+			root.power = 0
+			root.powerMax = 1
+			root.guardPoints = 0
+			root.dizzyPoints = 0
+			root.controller = -1
+		}
+		sys.appendToConsole(fmt.Sprintf("Removed slot %v immediately", pn))
+		l.Push(lua.LBool(true))
+		return 1
+	})
+
+	// readConsoleCommand: non-blocking read from stdin (for sandbox mode)
+	// Returns the command string if available, or empty string if none pending
+	luaRegister(l, "readConsoleCommand", func(l *lua.LState) int {
+		select {
+		case cmd := <-sys.commandLine:
+			l.Push(lua.LString(cmd))
+			return 1
+		default:
+			l.Push(lua.LString(""))
+			return 1
+		}
+	})
 	luaRegister(l, "addHotkey", func(*lua.LState) int {
 		l.Push(lua.LBool(func() bool {
 			k := StringToKey(strArg(l, 1))

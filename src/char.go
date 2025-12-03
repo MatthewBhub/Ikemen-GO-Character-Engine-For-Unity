@@ -12064,7 +12064,16 @@ func (cl *CharList) commandUpdate() {
 			cheat := int32(-1)
 			if root.controller < 0 {
 				if sys.roundState() == 2 && RandF32(0, sys.aiLevel[i]/2+32) > 32 { // TODO: Balance AI scaling
-					cheat = Rand(0, int32(len(root.cmd[root.ss.sb.playerNo].Commands))-1)
+					// Protect against empty command lists which would yield invalid Rand bounds
+					cmdLen := int32(0)
+					if root.ss.sb.playerNo >= 0 && root.ss.sb.playerNo < len(root.cmd) {
+						cmdLen = int32(len(root.cmd[root.ss.sb.playerNo].Commands))
+					}
+					if cmdLen > 0 {
+						cheat = Rand(0, cmdLen-1)
+					} else {
+						cheat = -1
+					}
 				}
 			}
 			// Iterate root and helpers

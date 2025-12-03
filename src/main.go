@@ -92,6 +92,11 @@ func main() {
 		sys.cfg = *cfg
 	}
 
+	// Check for sandbox mode flag
+	if _, ok := sys.cmdFlags["-sandbox"]; ok {
+		sys.sandboxMode = true
+	}
+
 	//os.Mkdir("debug", os.ModeSticky|0755)
 
 	// Check if the main lua file exists.
@@ -111,8 +116,17 @@ func main() {
 	sys.luaLState = sys.init(sys.gameWidth, sys.gameHeight)
 	defer sys.shutdown()
 
+	// Initialize sandbox mode if requested
+	if sys.sandboxMode {
+		sys.initSandbox()
+	}
+
 	// Begin processing game using its lua scripts
-	if err := sys.luaLState.DoFile(sys.cfg.Config.System); err != nil {
+	mainLuaFile := sys.cfg.Config.System
+	if sys.sandboxMode {
+		mainLuaFile = "external/script/sandbox.lua"
+	}
+	if err := sys.luaLState.DoFile(mainLuaFile); err != nil {
 		// Display error logs.
 		errorLog := createLog("Ikemen.log")
 		defer closeLog(errorLog)
@@ -151,6 +165,7 @@ func processCommandLine() {
 			"-nomusic":        true,
 			"-nosound":        true,
 			"-speedtest":      true,
+			"-sandbox":        true,
 		}
 		key := ""
 		player := 1
@@ -204,8 +219,9 @@ Debug Options:
 -maxpowermode           Enables auto-refill of Power bars
 -ailevel <level>        Changes game difficulty setting to <level> (1-8)
 -speed <speed>          Changes game speed setting to <speed> (-9 to 9)
--stresstest <frameskip> Stability test (AI matches at speed increased by <frameskip>)
--speedtest              Speed test (match speed x100)`
+				-stresstest <frameskip> Stability test (AI matches at speed increased by <frameskip>)
+-speedtest              Speed test (match speed x100)
+-sandbox                Character sandbox mode (auto-init MaxSimul, skip UI)`
 					//ShowInfoDialog(text, "I.K.E.M.E.N Command line options")
 					fmt.Printf("I.K.E.M.E.N Command line options\n\n" + text + "\nPress ENTER to exit")
 					var s string

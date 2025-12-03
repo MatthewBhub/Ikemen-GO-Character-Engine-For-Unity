@@ -2328,7 +2328,7 @@ function motif.setBaseTitleInfo()
 end
 
 function motif.setBaseOptionInfo()
-	motif.option_info.menu_itemname_menugame = "Game Settings"
+	motif.option_info.menu_itemname_menugame = "Game settings 2"
 	motif.option_info.menu_itemname_menugame_language = "Language"
 	motif.option_info.menu_itemname_menugame_difficulty = "Difficulty Level"
 	motif.option_info.menu_itemname_menugame_roundtime = "Time Limit"
